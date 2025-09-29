@@ -15,6 +15,7 @@ router.register(r"orders", OrderViewSet, basename="order")
 router.register(r"users", UserViewSet)
 
 urlpatterns = [
+    path("", include("frontend.urls")),
     path("admin/", admin.site.urls),
     path("api/", include(router.urls)),
     path("api/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
