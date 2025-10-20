@@ -74,3 +74,43 @@
   </div>
   <span class="agreement"><a href="#">Learn user licence agreement</a></span>
 </div>
+
+<script>
+document.querySelector(".form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/auth/token/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      alert("Error al iniciar sesión: " + (errorData.detail || JSON.stringify(errorData)));
+      return;
+    }
+
+    const data = await response.json();
+
+    // Guardar tokens en localStorage
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
+
+    alert("Inicio de sesión exitoso ✅");
+    window.location.href = "index.html"; // Redirige a la página principal
+  } catch (error) {
+    console.error(error);
+    alert("Error de conexión con el servidor.");
+  }
+});
+</script>
+
+</body>
+</html>

@@ -72,5 +72,55 @@
     Already have an account? <a href="sesion.html">Sign In</a>
   </span>
 </div>
+
+<script>
+document.querySelector(".form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const confirm = document.getElementById("confirm-password").value.trim();
+
+  if (password !== confirm) {
+    alert("Las contraseñas no coinciden");
+    return;
+  }
+
+  try {
+    const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        full_name: name,
+        email,
+        username: email.split("@")[0], // genera username simple
+        password,
+        password2: confirm,
+      }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert("Error en el registro: " + (data.detail || JSON.stringify(data)));
+      return;
+    }
+
+    alert("Registro exitoso ✅");
+    // Guarda el token y redirige directamente si lo deseas
+    localStorage.setItem("accessToken", data.access);
+    localStorage.setItem("refreshToken", data.refresh);
+
+    window.location.href = "sesion.html";
+  } catch (error) {
+    console.error(error);
+    alert("Error al registrar usuario.");
+  }
+});
+</script>
+
 </body>
 </html>
