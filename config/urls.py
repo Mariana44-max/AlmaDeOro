@@ -14,14 +14,22 @@ router.register(r"categories", CategoryViewSet)
 router.register(r"orders", OrderViewSet, basename="order")
 
 urlpatterns = [
+    # Frontend (páginas HTML y vistas)
     path("", include("frontend.urls")),
+
+    # Panel de administración
     path("admin/", admin.site.urls),
+
+    # API REST principal
     path("api/", include(router.urls)),
 
     # Autenticación JWT
     path("api/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
-    # Endpoints de usuarios (registro, perfil, direcciones, cambio de contraseña, etc.)
+    # Usuarios (registro, perfil, etc.)
     path("api/users/", include("users.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Arch
+
