@@ -12,14 +12,26 @@ router.register(r"products", ProductViewSet)
 router.register(r"orders", OrderViewSet, basename="order")
 
 urlpatterns = [
+    # Frontend (páginas HTML y vistas)
     path("", include("frontend.urls")),
+
+    # Panel de administración
     path("admin/", admin.site.urls),
+
+    # API REST principal
     path("api/", include(router.urls)),
 
     # JWT Authentication
     path("api/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
 
+<<<<<<< HEAD
     # Users
+=======
+    # Usuarios (registro, perfil, etc.)
+>>>>>>> 9e932d96640bc58a748f37b7a65ec76d81fb4468
     path("api/users/", include("users.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+# Arch
+

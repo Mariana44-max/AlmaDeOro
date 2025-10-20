@@ -5,14 +5,14 @@ body {
   align-items: center;
   height: 100vh;        /* altura total de la ventana */
   margin: 0;
-  background: linear-gradient(135deg, #ffffff 0%, #ffc400 100%); 
+  background: linear-gradient(135deg, #ffffff 0%, #d8c463 100%); 
 }
 
 .container {
   width: 350px;
   background: linear-gradient(
     45deg,
-    rgb(59, 57, 57) 0%,
+    rgb(85, 82, 82) 0%,
     rgb(244, 247, 251) 100%
   );
   border-radius: 40px;
@@ -28,11 +28,11 @@ body {
   background: linear-gradient(
     0deg,
     rgb(0, 0, 0) 0%,
-    rgb(92, 87, 87) 100%
+    rgb(91, 92, 81) 100%
   );
   border-radius: 40px;
   padding: 25px 35px;
-  border: 5px solid rgb(61, 57, 57);
+  border: 5px solid rgb(229, 223, 166);
   box-shadow: rgba(27, 27, 27, 0.878) 0px 30px 30px -20px;
   margin: 20px;
 }
@@ -41,7 +41,7 @@ body {
   text-align: center;
   font-weight: 900;
   font-size: 30px;
-  color: rgb(253, 236, 2);
+  color: rgb(190, 190, 189);
 }
 
 .form {
@@ -81,7 +81,7 @@ body {
 
 .form .forgot-password a {
   font-size: 11px;
-  color: #ffe600;
+  color:rgb(190, 190, 189);
   text-decoration: none;
 }
 
@@ -170,11 +170,11 @@ body {
 .agreement a {
   margin-left: 5px; /* pequeño espacio entre el texto y el enlace */
   text-decoration: none;
-  color: #fcd703; /* dorado elegante */
+  color: rgb(190, 190, 189); /* dorado elegante */
   font-weight: bold;
   transition: color 0.2s ease-in-out;
 }
 
 .agreement a:hover {
-  color: #ffea70; /* dorado más claro al pasar el cursor */
+  color:rgb(190, 190, 189); /* dorado más claro al pasar el cursor */
 }
