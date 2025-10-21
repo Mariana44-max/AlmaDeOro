@@ -239,38 +239,53 @@
   function setCart(c) { localStorage.setItem("cart", JSON.stringify(c)); }
 
   function renderCart() {
-    const container = document.getElementById("cart-items");
-    const cart = getCart();
-    container.innerHTML = "";
-    let total = 0;
-    if (cart.length === 0) {
-      container.innerHTML = `<p class="text-center text-muted">Tu carrito está vacío 🛒</p>`;
-      document.getElementById("cart-total").textContent = "$0";
-      return;
-    }
-    cart.forEach((item, index) => {
-      total += item.price * item.quantity;
-      const div = document.createElement("div");
-      div.classList.add("cart-item");
-      div.innerHTML = `
-        <img src="${item.image}" alt="${item.name}">
-        <div class="cart-item-info">
-          <h5>${item.name}</h5>
-          <p>$${item.price.toLocaleString()}</p>
-        </div>
-        <div class="quantity-controls">
-          <button class="btn-decrease" data-index="${index}">−</button>
-          <span>${item.quantity}</span>
-          <button class="btn-increase" data-index="${index}">+</button>
-        </div>
-        <span class="btn-remove" data-index="${index}">
-          <i class="fas fa-trash-alt"></i>
-        </span>`;
-      container.appendChild(div);
-    });
-    document.getElementById("cart-total").textContent = "$" + total.toLocaleString();
-    attachCartEvents();
+  const container = document.getElementById("cart-items");
+  const cart = getCart();
+  container.innerHTML = "";
+  let total = 0;
+
+  // Si no hay carrito o está vacío
+  if (!cart || cart.length === 0) {
+    container.innerHTML = `<p class="text-center text-muted">Tu carrito está vacío 🛒</p>`;
+    document.getElementById("cart-total").textContent = "$0";
+    return;
   }
+
+  // 🧹 Limpieza: eliminar productos corruptos (sin precio)
+  const cleanCart = cart.filter(item => item && item.price != null);
+  if (cleanCart.length !== cart.length) {
+    setCart(cleanCart);
+  }
+
+  cleanCart.forEach((item, index) => {
+    const price = parseFloat(item.price) || 0;
+    const quantity = parseInt(item.quantity) || 1;
+    const subtotal = price * quantity;
+    total += subtotal;
+
+    const div = document.createElement("div");
+    div.classList.add("cart-item");
+    div.innerHTML = `
+      <img src="${item.image || 'img/default.jpg'}" alt="${item.name || 'Producto'}">
+      <div class="cart-item-info">
+        <h5>${item.name || 'Producto'}</h5>
+        <p>$${price.toLocaleString()}</p>
+      </div>
+      <div class="quantity-controls">
+        <button class="btn-decrease" data-index="${index}">−</button>
+        <span>${quantity}</span>
+        <button class="btn-increase" data-index="${index}">+</button>
+      </div>
+      <span class="btn-remove" data-index="${index}">
+        <i class="fas fa-trash-alt"></i>
+      </span>`;
+    container.appendChild(div);
+  });
+
+  document.getElementById("cart-total").textContent = "$" + total.toLocaleString();
+  attachCartEvents();
+}
+
 
   function attachCartEvents() {
     document.querySelectorAll(".btn-increase").forEach(btn => {
@@ -314,51 +329,71 @@ async function checkout() {
     return;
   }
 
-  try {
-    // 🔹 Enviar carrito al backend (solo para crear la orden vacía)
-    const res = await fetch("http://127.0.0.1:8000/api/orders/checkout/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      // 🔹 Cuerpo con datos vacíos (se llenan en checkout.html)
-      body: JSON.stringify({
-        nombre: "",
-        direccion: "",
-        telefono: ""
-      })
-    });
+  Swal.fire({
+    title: "Datos de envío",
+    html: `
+      <input id="nombre" class="swal2-input" placeholder="Nombre completo">
+      <input id="direccion" class="swal2-input" placeholder="Dirección">
+      <input id="telefono" class="swal2-input" placeholder="Teléfono">
+    `,
+    background: "#111",
+    color: "#fff",
+    confirmButtonColor: "#d4af37",
+    showCancelButton: true,
+    confirmButtonText: "Finalizar compra",
+    cancelButtonText: "Cancelar",
+    preConfirm: () => {
+      const nombre = document.getElementById("nombre").value.trim();
+      const direccion = document.getElementById("direccion").value.trim();
+      const telefono = document.getElementById("telefono").value.trim();
+      if (!nombre || !direccion || !telefono) {
+        Swal.showValidationMessage("Por favor completa todos los campos.");
+        return false;
+      }
+      return { nombre, direccion, telefono };
+    }
+  }).then(async (result) => {
+    if (!result.isConfirmed) return;
 
-    if (!res.ok) throw new Error("Error al procesar el pedido");
+    const { nombre, direccion, telefono } = result.value;
 
-    // Vaciar carrito local y redirigir al formulario de envío
-    localStorage.removeItem("cart");
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/orders/checkout/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ nombre, direccion, telefono }),
+      });
 
-    Swal.fire({
-      icon: "success",
-      title: "Redirigiendo al formulario de envío",
-      text: "Completa tus datos para finalizar la compra 💎",
-      background: "#111",
-      color: "#fff",
-      confirmButtonColor: "#d4af37",
-      timer: 1500,
-      showConfirmButton: false,
-    }).then(() => {
-      window.location.href = "checkout.html";
-    });
+      if (!res.ok) throw new Error("Error al procesar el pedido");
 
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Error",
-      text: "No se pudo procesar el pedido.",
-      background: "#111",
-      color: "#fff",
-      confirmButtonColor: "#d4af37",
-    });
-  }
+      localStorage.removeItem("cart");
+
+      Swal.fire({
+        icon: "success",
+        title: "Compra confirmada 💎",
+        text: "Tu pedido fue registrado correctamente. Te contactaremos pronto.",
+        background: "#111",
+        color: "#fff",
+        confirmButtonColor: "#d4af37",
+      }).then(() => {
+        window.location.href = "checkout.html";
+      });
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se pudo completar la compra.",
+        background: "#111",
+        color: "#fff",
+        confirmButtonColor: "#d4af37",
+      });
+    }
+  });
 }
+
 
   // === Inicializar ===
   document.addEventListener("DOMContentLoaded", () => {
