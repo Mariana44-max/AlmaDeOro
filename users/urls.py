@@ -7,15 +7,17 @@ from .views import (
     ProfileAPIView,
     AddressViewSet,
     ChangePasswordAPIView,
+    UserViewSet,  # ✅ Agregado
 )
 
-# Router para direcciones (irá bajo /me/addresses/)
+# Router general
 router = DefaultRouter()
-router.register(r'addresses', AddressViewSet, basename='address')
+router.register(r'', UserViewSet, basename='user')  # ✅ /api/users/
+router.register(r'me/addresses', AddressViewSet, basename='address')  # /api/users/me/addresses/
 
 urlpatterns = [
     # 🔐 Autenticación
-    path('register/', RegisterAPIView.as_view(), name='register'),  # ✅ /api/users/register/
+    path('register/', RegisterAPIView.as_view(), name='register'),
     path('logout/', LogoutAPIView.as_view(), name='logout'),
 
     # 👤 Información y perfil del usuario actual
@@ -23,7 +25,6 @@ urlpatterns = [
     path('me/profile/', ProfileAPIView.as_view(), name='user-profile'),
     path('me/change-password/', ChangePasswordAPIView.as_view(), name='change-password'),
 
-    # 📦 Direcciones (anidadas en /me/)
-    path('me/', include(router.urls)),  # /api/users/me/addresses/
+    # 🚀 Incluye las rutas del router
+    path('', include(router.urls)),
 ]
-
