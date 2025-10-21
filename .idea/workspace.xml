@@ -4,17 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="82e9c064-2b21-4cf3-8f89-291945131048" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/img/Collares/BrilloInfinto.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/img/Collares/EsenciaNatural.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/img/Collares/MinimalGlow.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/img/Relojes/ClasicoDorado.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/img/Relojes/DeportivoLux.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/img/Relojes/RoyalCronho.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/contact.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/shop.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/shop.html" afterDir="false" />
-    </list>
+    <list default="true" id="82e9c064-2b21-4cf3-8f89-291945131048" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,7 +47,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Merging master",
+    "git-widget-placeholder": "master",
     "last_opened_file_path": "C:/Users/57316/AlmaDeOro",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -115,7 +105,7 @@
       <workItem from="1760996044660" duration="3025000" />
       <workItem from="1761064375481" duration="54000" />
       <workItem from="1761064467828" duration="1936000" />
-      <workItem from="1761068698106" duration="4873000" />
+      <workItem from="1761068698106" duration="5437000" />
     </task>
     <servers />
   </component>
