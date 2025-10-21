@@ -3,72 +3,68 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign In | Alma de Oro</title>
-
-  <!-- Enlace a tu CSS -->
+  <title>Iniciar sesión | Alma de Oro</title>
   <link rel="stylesheet" href="css/stylelogin.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
 <div class="container">
-  <div class="heading">Sign In</div>
-  <form class="form" action="">
-    <input
-      placeholder="E-mail"
-      id="email"
-      name="email"
-      type="email"
-      class="input"
-      required=""
-    />
-    <input
-      placeholder="Password"
-      id="password"
-      name="password"
-      type="password"
-      class="input"
-      required=""
-    />
-    <span class="forgot-password"><a href="#">Forgot Password ?</a></span>
-    <input value="Sign In" type="submit" class="login-button" />
+  <div class="heading">Iniciar Sesión</div>
+  <form class="form" id="login-form">
+    <input placeholder="E-mail" id="email" name="email" type="email" class="input" required>
+    <input placeholder="Contraseña" id="password" name="password" type="password" class="input" required>
+    <span class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></span>
+    <input value="Entrar" type="submit" class="login-button">
   </form>
-  
+  <span class="agreement">
+    ¿No tienes cuenta? <a href="register.html">Regístrate</a>
+  </span>
+</div>
 
 <script>
-document.querySelector(".form").addEventListener("submit", async (e) => {
+document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
-
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value.trim();
 
   try {
     const response = await fetch("http://127.0.0.1:8000/api/auth/token/", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      alert("Error al iniciar sesión: " + (errorData.detail || JSON.stringify(errorData)));
+      Swal.fire({
+        icon: "error",
+        title: "Error al iniciar sesión",
+        text: data.detail || "Credenciales incorrectas",
+        confirmButtonColor: "#d4af37",
+      });
       return;
     }
 
-    const data = await response.json();
-
-    // Guardar tokens en localStorage
     localStorage.setItem("accessToken", data.access);
     localStorage.setItem("refreshToken", data.refresh);
 
-    alert("Inicio de sesión exitoso ✅");
-    window.location.href = "index.html"; // Redirige a la página principal
+    Swal.fire({
+      icon: "success",
+      title: "Bienvenido de nuevo ✨",
+      text: "Inicio de sesión exitoso.",
+      confirmButtonColor: "#27ae60",
+    }).then(() => window.location.href = "index.html");
+
   } catch (error) {
-    console.error(error);
-    alert("Error de conexión con el servidor.");
+    Swal.fire({
+      icon: "error",
+      title: "Error de conexión",
+      text: "No se pudo conectar al servidor.",
+      confirmButtonColor: "#d4af37",
+    });
   }
 });
 </script>
-
 </body>
 </html>

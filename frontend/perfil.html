@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Perfil | Alma de Oro</title>
+
+  <!-- Estilos base -->
+  <link rel="stylesheet" href="css/stylelogin.css" />
+
+  <!-- Librería de alertas modernas -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <style>
+    /* === Botón Cerrar Sesión elegante === */
+    .logout-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 25px;
+      font-weight: 600;
+    }
+
+    .logout-button:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+    }
+
+    /* === Botones dorados para estilo "Alma de Oro" === */
+    .login-button {
+      background-color: #d4af37;
+      border: none;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .login-button:hover {
+      background-color: #b7950b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="heading">Mi Perfil</div>
+
+    <!-- ✅ Formulario de perfil -->
+    <form id="profile-form" class="form">
+      <input id="username" type="text" placeholder="Nombre de usuario" class="input" required />
+      <input id="email" type="email" placeholder="Correo electrónico" class="input" required />
+      <button type="submit" class="login-button">Actualizar Perfil</button>
+    </form>
+
+    <!-- ✅ Formulario de cambio de contraseña -->
+    <form id="password-form" class="form" style="margin-top: 30px;">
+      <div class="heading">Cambiar Contraseña</div>
+      <input id="old-password" type="password" placeholder="Contraseña actual" class="input" required />
+      <input id="new-password" type="password" placeholder="Nueva contraseña" class="input" required />
+      <input id="confirm-password" type="password" placeholder="Confirmar nueva contraseña" class="input" required />
+      <button type="submit" class="login-button">Actualizar Contraseña</button>
+    </form>
+
+    <!-- ✅ Botón de cerrar sesión -->
+    <button id="logout-btn" class="logout-button">Cerrar sesión</button>
+  </div>
+
+  <!-- ✅ Script funcional -->
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("accessToken");
+      if (!token) {
+        Swal.fire({
+          icon: "warning",
+          title: "Sesión expirada",
+          text: "Por favor, inicia sesión nuevamente.",
+          confirmButtonColor: "#d4af37",
+        }).then(() => (window.location.href = "sesion.html"));
+        return;
+      }
+
+      // === Cargar datos del usuario ===
+      const response = await fetch("http://127.0.0.1:8000/api/users/me/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const user = await response.json();
+      document.getElementById("username").value = user.username;
+      document.getElementById("email").value = user.email;
+
+      // === Actualizar perfil ===
+      document.getElementById("profile-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+          username: document.getElementById("username").value,
+          email: document.getElementById("email").value,
+        };
+
+        const res = await fetch("http://127.0.0.1:8000/api/users/me/", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
+        });
+
+        if (res.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "Perfil actualizado",
+            text: "Tu información se guardó correctamente.",
+            confirmButtonColor: "#27ae60",
+          });
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo actualizar el perfil.",
+            confirmButtonColor: "#d4af37",
+          });
+        }
+      });
+
+      // === Cambiar contraseña ===
+      document.getElementById("password-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const old_password = document.getElementById("old-password").value.trim();
+        const new_password = document.getElementById("new-password").value.trim();
+        const confirm = document.getElementById("confirm-password").value.trim();
+
+        if (new_password !== confirm) {
+          Swal.fire({
+            icon: "error",
+            title: "Contraseñas no coinciden",
+            text: "Por favor verifica los campos.",
+            confirmButtonColor: "#d4af37",
+          });
+          return;
+        }
+
+        try {
+          const res = await fetch("http://127.0.0.1:8000/api/users/me/change-password/", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ old_password, new_password }),
+          });
+
+          const data = await res.json();
+
+          if (res.ok) {
+            Swal.fire({
+              icon: "success",
+              title: "Contraseña actualizada",
+              text: "Tu contraseña se cambió correctamente.",
+              confirmButtonColor: "#27ae60",
+            });
+            document.getElementById("password-form").reset();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error al cambiar contraseña",
+              text: data.message || "Verifica tus datos e inténtalo nuevamente.",
+              confirmButtonColor: "#d4af37",
+            });
+          }
+        } catch (error) {
+          Swal.fire({
+            icon: "error",
+            title: "Error de conexión",
+            text: "No se pudo conectar al servidor.",
+            confirmButtonColor: "#d4af37",
+          });
+        }
+      });
+
+      // === Cerrar sesión ===
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        Swal.fire({
+          icon: "question",
+          title: "¿Cerrar sesión?",
+          showCancelButton: true,
+          confirmButtonText: "Sí, salir",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#e74c3c",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            Swal.fire({
+              icon: "success",
+              title: "Sesión cerrada",
+              text: "Vuelve pronto ✨",
+              confirmButtonColor: "#d4af37",
+            }).then(() => (window.location.href = "index.html"));
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

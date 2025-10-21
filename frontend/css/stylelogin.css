@@ -178,3 +178,27 @@ body {
 .agreement a:hover {
   color:rgb(190, 190, 189); /* dorado más claro al pasar el cursor */
 }
+.logout-button-gradient {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(135deg, #e0c433  0%, #b8b8b5 100%);
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 30px;
+}
+
+.logout-button-gradient:hover {
+  background: linear-gradient(135deg, #d8c463 0%, #d1d1c2 100%);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(182, 176, 176, 0.4);
+}
+.swal2-confirm {
+  background: linear-gradient(90deg, #ffcc00, #d4af37) !important;
+  color: black !important;
+  font-weight: 600;
+}
