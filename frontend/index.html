@@ -1,357 +1,430 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8">
-  <title>Alma de Oro - Joyas de Lujo</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <link href="img/favicon.ico" rel="icon">
+  <meta charset="utf-8" />
+  <title>Alma de Oro - Inicio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fuentes y librerías -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <!-- Icono -->
+  <link href="img/favicon.ico" rel="icon" />
+
+  <!-- Fuentes & librerías -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" defer></script>
 
   <style>
-    body {
-      background-color: #0a0a0a;
-      color: #fff;
-      font-family: 'Roboto', sans-serif;
-      overflow-x: hidden;
+    :root{
+      --gold:#d4af37;
+      --bg:#111;
+      --black:#000;
+      --gray:#1a1a1a;
+      --border:#333;
+      --text:#fff;
+      --muted:#ccc;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background-color:var(--bg);
+      color:var(--text);
+      font-family:'Roboto',sans-serif;
     }
 
-    /* NAVBAR (igual que shop.html) */
-    .navbar-dark {
-      background-color: #000 !important;
-      border-bottom: 1px solid #d4af37;
+    /* NAVBAR */
+    .navbar{
+      position:sticky; top:0; z-index:1000;
+      background:var(--black);
+      border-bottom:1px solid var(--gold);
+      padding:14px 0;
     }
-    .navbar-dark .nav-link {
-      color: #fff !important;
-      text-transform: uppercase;
-      font-weight: 500;
-      transition: color 0.3s;
+    .container{
+      max-width:1200px; margin:0 auto; padding:0 16px;
     }
-    .navbar-dark .nav-link:hover,
-    .navbar-dark .nav-link.active {
-      color: #d4af37 !important;
+    .navbar .wrap{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
     }
-    .navbar-brand span:first-child {
-      color: #d4af37;
+    .brand{
+      font-size:1.6rem; font-weight:700; text-transform:uppercase; text-decoration:none;
     }
-    .navbar-brand span:nth-child(2) {
-      color: #fff;
+    .brand .left, .brand .right{color:var(--gold)}
+    .brand .mid{color:#fff}
+
+    .nav-links{
+      display:flex; align-items:center; gap:20px; flex-wrap:wrap;
     }
-    .navbar-brand span:last-child {
-      color: #d4af37;
+    .nav-links a{
+      color:#fff; text-decoration:none; text-transform:uppercase; font-weight:500; transition:.2s color;
+    }
+    .nav-links a:hover, .nav-links a.active{color:var(--gold)}
+
+    /* Dropdown */
+    .dropdown{position:relative}
+    .dropdown-toggle{
+      background:none; border:0; color:#fff; font-weight:500; text-transform:uppercase; cursor:pointer;
+    }
+    .dropdown-toggle:hover{color:var(--gold)}
+    .dropdown-menu{
+      position:absolute; top:34px; left:0;
+      background:var(--gray); border:1px solid var(--border);
+      border-radius:6px; min-width:180px; display:none; overflow:hidden;
+      animation: dropdownFade .3s ease;
+    }
+    .dropdown:hover .dropdown-menu{display:block}
+    .dropdown-menu a{
+      display:block; padding:10px 14px; color:var(--gold); text-decoration:none;
+    }
+    .dropdown-menu a:hover{background:#222}
+
+    @keyframes dropdownFade {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* Dropdown categorías */
-    .dropdown-menu-dark {
-      background-color: #111;
-      border: 1px solid #d4af37;
+    .right{
+      display:flex; align-items:center; gap:16px;
     }
-    .dropdown-menu-dark a {
-      color: #d4af37;
+    .cart-link{
+      position:relative; color:#fff; text-decoration:none;
     }
-    .dropdown-menu-dark a:hover {
-      background-color: #d4af37;
-      color: #000;
+    #cart-count{
+      position:absolute; top:-8px; right:-10px;
+      background:var(--gold); color:#000; font-size:12px; border-radius:999px; padding:2px 7px;
     }
 
-    /* CARRUSEL */
-    .owl-carousel .item {
-      position: relative;
-      height: 90vh;
-      overflow: hidden;
-      width: 100%;
+    /* HERO */
+    .hero{
+      position:relative; text-align:center; padding:120px 20px;
+      background:url("img/banner-1.jpg") center/cover no-repeat;
     }
-    .carousel-image-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .hero::after{
+      content:""; position:absolute; inset:0; background:rgba(0,0,0,.55);
     }
-    .carousel-image-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(60%);
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 1;
+    .hero .inner{position:relative; z-index:1}
+    .hero h1{margin:0 0 10px; font-size:3rem; color:var(--gold)}
+    .hero p{margin:0 auto 20px; color:var(--muted); max-width:720px; font-size:1.1rem}
+    .hero a.btn{
+      display:inline-block; background:var(--gold); color:#000; text-decoration:none;
+      padding:10px 22px; border-radius:24px; font-weight:700; transition:.2s background;
     }
-    .carousel-content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.55);
-      padding: 50px 40px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
-      max-width: 700px;
-    }
-    .carousel-content h1 {
-      font-size: 3rem;
-      color: #d4af37;
-      font-weight: 700;
-      margin-bottom: 15px;
-      text-shadow: 0 0 10px #000;
-    }
-    .carousel-content p {
-      font-size: 1.2rem;
-      color: #fff;
-      margin-bottom: 25px;
-    }
-    .btn-dorado {
-      background-color: #d4af37;
-      color: #000;
-      font-weight: 600;
-      padding: 10px 30px;
-      border-radius: 30px;
-      border: none;
-      transition: all 0.3s ease;
-    }
-    .btn-dorado:hover {
-      background-color: #b89b2e;
-      transform: scale(1.05);
-    }
+    .hero a.btn:hover{background:#b89928}
 
-    /* PRODUCTOS DESTACADOS */
-    .product-card {
-      background-color: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
+    /* DESTACADOS */
+    .featured{padding:60px 0}
+    .featured h2{text-align:center; color:var(--gold); margin:0 0 26px; font-size:2rem}
+    .products{
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+      gap:22px;
     }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px rgba(212,175,55,0.3);
+    .card{
+      background:var(--gray); border:1px solid var(--border); border-radius:12px;
+      overflow:hidden; transition:.25s transform,.25s box-shadow;
     }
-    .product-card img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
+    .card:hover{transform:translateY(-4px); box-shadow:0 0 12px rgba(212,175,55,.28)}
+    .card img{width:100%; height:240px; object-fit:cover; display:block}
+    .card .info{padding:14px}
+    .card .info h5{margin:0 0 8px; color:var(--gold); font-size:1.05rem}
+    .card .info p{margin:0 0 12px; color:var(--muted)}
+    .btn-cart{
+      display:inline-block; background:var(--gold); color:#000; border:0;
+      padding:8px 14px; border-radius:20px; font-weight:700; cursor:pointer; transition:.2s background;
     }
-    .product-info {
-      text-align: center;
-      padding: 15px;
-    }
-    .product-info h5 {
-      color: #d4af37;
-      font-weight: 600;
-    }
-    .product-info p {
-      color: #ccc;
-    }
+    .btn-cart:hover{background:#b89928}
 
     /* FOOTER */
-    footer {
-      background-color: #000;
-      color: #aaa;
-      padding: 50px 0 20px;
-      border-top: 1px solid #d4af37;
+    footer{
+      margin-top:50px; background:var(--black); border-top:1px solid var(--border);
+      color:#aaa; text-align:center; padding:28px 0;
     }
-    footer a {
-      color: #d4af37;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
+    footer a{color:var(--gold); text-decoration:none}
+    footer a:hover{text-decoration:underline}
 
-    @media (max-width: 768px) {
-      .carousel-content {
-        padding: 25px;
-      }
-      .carousel-content h1 {
-        font-size: 1.8rem;
-      }
-      .carousel-content p {
-        font-size: 1rem;
-      }
+    /* Responsive */
+    @media (max-width: 820px){
+      .nav-links{display:none}
+      .right{margin-left:auto}
     }
   </style>
 </head>
-
 <body>
+
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+  <header class="navbar wow animate__animated animate__fadeInDown" data-wow-duration=".8s">
     <div class="container">
-      <a href="index.html" class="navbar-brand">
-        <span>Alma</span><span> de </span><span>Oro</span>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-        <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a href="index.html" class="nav-link active">Inicio</a></li>
-          <li class="nav-item"><a href="shop.html" class="nav-link">Tienda</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categorías</a>
-            <div class="dropdown-menu dropdown-menu-dark">
-              <a class="dropdown-item" href="#">Anillos</a>
-              <a class="dropdown-item" href="#">Collares</a>
-              <a class="dropdown-item" href="#">Pulseras</a>
-              <a class="dropdown-item" href="#">Aretes</a>
+      <div class="wrap">
+        <a href="index.html" class="brand">
+          <span class="left">Alma</span><span class="mid"> de </span><span class="right">Oro</span>
+        </a>
+
+        <nav class="nav-links">
+          <a class="active" href="index.html">Inicio</a>
+
+          <div class="dropdown">
+            <button class="dropdown-toggle" type="button">Categorías</button>
+            <div class="dropdown-menu">
+              <a href="shop.html">Anillos</a>
+              <a href="shop.html">Collares</a>
+              <a href="shop.html">Pulseras</a>
+              <a href="shop.html">Aretes</a>
             </div>
-          </li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+          </div>
 
-          <li class="nav-item mx-2">
-            <a href="#" class="nav-link"><i class="fas fa-heart text-dorado"></i></a>
-          </li>
-          <li class="nav-item mx-2">
-            <a href="#" class="nav-link position-relative">
-              <i class="fas fa-shopping-cart text-dorado"></i>
-              <span class="badge badge-warning position-absolute" style="top:2px; right:-6px; background:#d4af37; color:#000;">0</span>
-            </a>
-          </li>
-          <li class="nav-item dropdown" id="account-menu"></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+          <a href="shop.html">Tienda</a>
+          <a href="contact.html">Contacto</a>
+        </nav>
 
-  <!-- CARRUSEL -->
-  <div class="owl-carousel owl-theme">
-    <div class="item">
-      <div class="carousel-image-container">
-        <img src="img/banner-joya.jpg" alt="Joyas de lujo">
-        <div class="carousel-content" data-aos="zoom-in">
-          <h1>Lujo que refleja tu esencia</h1>
-          <p>Descubre la elegancia eterna en cada detalle</p>
-          <a href="shop.html" class="btn-dorado">Ver colección</a>
+        <div class="right">
+          <div class="dropdown" id="account-menu"></div>
+
+          <a class="cart-link" href="carrito.html" aria-label="Carrito">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+          </a>
         </div>
       </div>
     </div>
-    <div class="item">
-      <div class="carousel-image-container">
-        <img src="img/banner-coleccion.jpg" alt="Colección exclusiva">
-        <div class="carousel-content" data-aos="zoom-in">
-          <h1>Colección Exclusiva 2025</h1>
-          <p>Hecha a mano con pasión, diseñada para brillar contigo</p>
-          <a href="shop.html" class="btn-dorado">Explorar ahora</a>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="inner wow animate__animated animate__fadeIn" data-wow-duration="1.2s">
+      <h1 class="wow animate__animated animate__fadeInDown" data-wow-delay=".2s">Joyas que reflejan tu esencia</h1>
+      <p class="wow animate__animated animate__fadeInUp" data-wow-delay=".4s">Elegancia y brillo en piezas únicas creadas con pasión. Encuentra el toque perfecto para cada ocasión.</p>
+      <a class="btn wow animate__animated animate__zoomIn" data-wow-delay=".6s" href="shop.html">Explorar tienda</a>
+    </div>
+  </section>
+
+  <!-- DESTACADOS -->
+  <main class="featured">
+  <div class="container">
+    <h2 class="wow animate__animated animate__fadeInUp" data-wow-delay=".2s">
+      Productos destacados
+    </h2>
+
+    <div class="products wow animate__animated animate__fadeInUp" data-wow-delay=".3s" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; margin-top: 30px;">
+      
+      <!-- 🔸 Producto 1 -->
+      <article 
+        class="card" 
+        data-id="1" 
+        data-name="Anillo Clásico" 
+        data-price="180000" 
+        data-image="img/product-1.jpg"
+        style="background-color: #111; border: 1px solid #333; border-radius: 10px; overflow: hidden; transition: transform .3s, box-shadow .3s; text-align: center;">
+        
+        <img src="img/product-1.jpg" alt="Anillo Clásico" 
+          style="width: 100%; height: 260px; object-fit: cover; transition: opacity .3s;">
+        
+        <div class="info" style="padding: 20px;">
+          <h5 style="color: #d4af37; font-weight: 600;">Anillo Clásico</h5>
+          <p style="color: #ccc; margin-bottom: 15px;">$180.000</p>
+          <button class="btn-cart" 
+            style="background-color: #d4af37; color: #000; border: none; border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer; transition: background .3s;">
+            Añadir al carrito
+          </button>
         </div>
-      </div>
+      </article>
+
+      <!-- 🔸 Producto 2 -->
+      <article 
+        class="card" 
+        data-id="2" 
+        data-name="Collar Dorado Fino" 
+        data-price="250000" 
+        data-image="img/product-2.jpg"
+        style="background-color: #111; border: 1px solid #333; border-radius: 10px; overflow: hidden; transition: transform .3s, box-shadow .3s; text-align: center;">
+        
+        <img src="img/product-2.jpg" alt="Collar Dorado Fino" 
+          style="width: 100%; height: 260px; object-fit: cover; transition: opacity .3s;">
+        
+        <div class="info" style="padding: 20px;">
+          <h5 style="color: #d4af37; font-weight: 600;">Collar Dorado Fino</h5>
+          <p style="color: #ccc; margin-bottom: 15px;">$250.000</p>
+          <button class="btn-cart" 
+            style="background-color: #d4af37; color: #000; border: none; border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer; transition: background .3s;">
+            Añadir al carrito
+          </button>
+        </div>
+      </article>
+
+      <!-- 🔸 Producto 3 -->
+      <article 
+        class="card" 
+        data-id="3" 
+        data-name="Pulsera de Lujo" 
+        data-price="220000" 
+        data-image="img/product-3.jpg"
+        style="background-color: #111; border: 1px solid #333; border-radius: 10px; overflow: hidden; transition: transform .3s, box-shadow .3s; text-align: center;">
+        
+        <img src="img/product-3.jpg" alt="Pulsera de Lujo" 
+          style="width: 100%; height: 260px; object-fit: cover; transition: opacity .3s;">
+        
+        <div class="info" style="padding: 20px;">
+          <h5 style="color: #d4af37; font-weight: 600;">Pulsera de Lujo</h5>
+          <p style="color: #ccc; margin-bottom: 15px;">$220.000</p>
+          <button class="btn-cart" 
+            style="background-color: #d4af37; color: #000; border: none; border-radius: 20px; padding: 8px 20px; font-weight: 600; cursor: pointer; transition: background .3s;">
+            Añadir al carrito
+          </button>
+        </div>
+      </article>
+
     </div>
   </div>
+</main>
 
-  <!-- PRODUCTOS DESTACADOS -->
-  <div class="container my-5">
-    <h2 class="text-center mb-4" style="color:#d4af37;">Destacados de la Semana</h2>
-    <div class="row">
-      <div class="col-md-4 mb-4">
-        <div class="product-card" data-aos="fade-up">
-          <img src="img/product-1.jpg" alt="Anillo de oro">
-          <div class="product-info">
-            <h5>Anillo Clásico</h5>
-            <p>$180.000</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
-          <img src="img/product-2.jpg" alt="Collar elegante">
-          <div class="product-info">
-            <h5>Collar Dorado Fino</h5>
-            <p>$250.000</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="product-card" data-aos="fade-up" data-aos-delay="400">
-          <img src="img/product-3.jpg" alt="Pulsera de lujo">
-          <div class="product-info">
-            <h5>Pulsera de Lujo</h5>
-            <p>$220.000</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- FOOTER -->
-  <footer class="mt-5">
-    <div class="container text-center">
-      <p>&copy; 2025 <span style="color:#d4af37;">Alma de Oro</span> — Todos los derechos reservados.</p>
-      <p>Síguenos en:
-        <a href="#"><i class="fab fa-instagram mx-2"></i></a>
-        <a href="#"><i class="fab fa-facebook-f mx-2"></i></a>
-        <a href="#"><i class="fab fa-whatsapp mx-2"></i></a>
+  <footer class="wow animate__animated animate__fadeIn" data-wow-delay=".3s">
+    <div class="container">
+      <p>&copy; 2025 <a href="#">Alma de Oro</a> — Todos los derechos reservados.</p>
+      <p>Síguenos:
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        &nbsp;|&nbsp;
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        &nbsp;|&nbsp;
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
       </p>
     </div>
   </footer>
 
-  <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <!-- SCRIPT PRINCIPAL -->
+ <script>
+  // ===============================
+  // 🔐 USUARIO
+  // ===============================
+  async function setupUserMenu() {
+    const menu = document.getElementById("account-menu");
+    const token = localStorage.getItem("accessToken");
 
-  <script>
-    $('.owl-carousel').owlCarousel({
-      items: 1,
-      loop: true,
-      autoplay: true,
-      autoplayTimeout: 6000,
-      animateOut: 'fadeOut',
-      dots: false
-    });
+    if (!token) {
+      menu.innerHTML = `
+        <button class="dropdown-toggle" type="button">Mi cuenta</button>
+        <div class="dropdown-menu">
+          <a href="sesion.html">Iniciar sesión</a>
+          <a href="register.html">Registrarse</a>
+        </div>`;
+      return;
+    }
 
-    AOS.init({ duration: 1000, once: true, easing: 'ease-in-out' });
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/users/me/", {
+        headers: { Authorization: "Bearer " + token }
+      });
+      if (!res.ok) throw new Error("Token inválido");
+      const user = await res.json();
 
-    document.addEventListener("DOMContentLoaded", async () => {
-      const navbar = document.getElementById("account-menu");
-      const token = localStorage.getItem("accessToken");
+      menu.innerHTML = `
+        <button class="dropdown-toggle" type="button"><i class="fas fa-user-circle"></i> ${user.username}</button>
+        <div class="dropdown-menu" style="right:0; left:auto;">
+          <a href="perfil.html">Mi perfil</a>
+          <a href="#" id="logout" class="text-danger">Cerrar sesión</a>
+        </div>`;
 
-      if (!token) {
-        navbar.innerHTML = `
-          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-            Mi Cuenta
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="sesion.html">Iniciar sesión</a>
-            <a class="dropdown-item" href="register.html">Registrarse</a>
-          </div>`;
-        return;
-      }
-
-      try {
-        const response = await fetch("http://127.0.0.1:8000/api/users/me/", {
-          headers: { Authorization: `Bearer ${token}` },
+      document.getElementById("logout").addEventListener("click", function (e) {
+        e.preventDefault();
+        Swal.fire({
+          icon: "question",
+          title: "¿Cerrar sesión?",
+          showCancelButton: true,
+          confirmButtonText: "Sí, salir",
+          cancelButtonText: "Cancelar",
+          background: "#111",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        }).then((r) => {
+          if (r.isConfirmed) {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            window.location.href = "index.html";
+          }
         });
+      });
+    } catch {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+    }
+  }
 
-        if (!response.ok) throw new Error("Token inválido");
+  // ===============================
+  // 🛒 CARRITO
+  // ===============================
+  function getCart() {
+    try { return JSON.parse(localStorage.getItem("cart")) || []; }
+    catch { return []; }
+  }
 
-        const user = await response.json();
-        navbar.innerHTML = `
-          <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">
-            <i class="fas fa-user-circle"></i> ${user.username}
-          </button>
-          <div class="dropdown-menu dropdown-menu-right">
-            <a class="dropdown-item" href="perfil.html">Mi Perfil</a>
-            <a class="dropdown-item text-danger" href="#" id="logout">Cerrar sesión</a>
-          </div>`;
+  function setCart(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }
 
-        document.getElementById("logout").addEventListener("click", () => {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          window.location.href = "index.html";
-        });
-      } catch (error) {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-      }
+  function updateCartCount() {
+    const cart = getCart();
+    const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const countEl = document.getElementById("cart-count");
+    if (countEl) countEl.textContent = total;
+  }
+
+  function addToCart(item) {
+    const cart = getCart();
+    const found = cart.find(p => p.id == item.id);
+
+    if (found) {
+      found.quantity = (found.quantity || 1) + 1;
+    } else {
+      cart.push({ ...item, quantity: 1 });
+    }
+
+    setCart(cart);
+    updateCartCount();
+
+    Swal.fire({
+      icon: "success",
+      title: "Producto agregado",
+      text: `${item.name} se añadió al carrito.`,
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#d4af37"
     });
-  </script>
+  }
+
+  function removeFromCart(id) {
+    let cart = getCart();
+    cart = cart.filter(item => item.id != id);
+    setCart(cart);
+    updateCartCount();
+  }
+
+  // ===============================
+  // 🚀 INICIALIZAR
+  // ===============================
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof WOW !== "undefined") new WOW({ mobile: false }).init();
+
+    setupUserMenu();
+    updateCartCount();
+
+    document.querySelectorAll(".btn-cart").forEach(btn => {
+      btn.addEventListener("click", function () {
+        const card = this.closest(".card");
+        addToCart({
+          id: card.dataset.id,
+          name: card.dataset.name,
+          price: parseFloat(card.dataset.price),
+          image: card.dataset.image
+        });
+      });
+    });
+  });
+</script>
+
 </body>
 </html>
+
+
 
 
 

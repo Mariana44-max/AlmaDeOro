@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>Carrito - Alma de Oro</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <link href="img/favicon.ico" rel="icon">
+
+  <!-- Fuentes y librerías -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: #fff;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    /* Navbar */
+    .navbar-dark {
+      background-color: #000 !important;
+      border-bottom: 1px solid #d4af37;
+    }
+    .navbar-dark .nav-link {
+      color: #fff !important;
+      transition: color 0.3s;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    .navbar-dark .nav-link:hover,
+    .navbar-dark .nav-link.active {
+      color: #d4af37 !important;
+    }
+
+    #account-menu .dropdown-toggle {
+      color: #d4af37;
+      border: none;
+      background: transparent;
+    }
+
+    /* Carrito */
+    .cart-container {
+      max-width: 1000px;
+      margin: 60px auto;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 10px;
+      padding: 25px;
+      box-shadow: 0 0 15px rgba(212,175,55,0.15);
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #333;
+      padding: 15px 0;
+    }
+
+    .cart-item img {
+      width: 90px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 10px;
+      border: 1px solid #444;
+    }
+
+    .cart-item-info {
+      flex: 1;
+      margin-left: 15px;
+    }
+
+    .cart-item-info h5 {
+      color: #d4af37;
+      font-weight: 600;
+      margin-bottom: 5px;
+    }
+
+    .cart-item-info p {
+      color: #ccc;
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .quantity-controls button {
+      background: #d4af37;
+      border: none;
+      color: #000;
+      font-weight: 700;
+      border-radius: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .quantity-controls button:hover { background: #b8962e; }
+
+    .quantity-controls span {
+      min-width: 20px;
+      text-align: center;
+      display: inline-block;
+    }
+
+    .btn-remove {
+      color: #e74c3c;
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+    .btn-remove:hover { color: #ff7675; }
+
+    .cart-summary {
+      text-align: right;
+      margin-top: 30px;
+    }
+
+    .cart-summary h4 { color: #d4af37; }
+
+    .btn-checkout {
+      background-color: #d4af37;
+      color: #000;
+      padding: 10px 25px;
+      border-radius: 25px;
+      border: none;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+    .btn-checkout:hover { background-color: #b8962e; }
+
+    footer {
+      background: #000;
+      color: #aaa;
+      padding: 40px 0 20px;
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVBAR IGUAL A SHOP -->
+  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+      <a href="index.html" class="navbar-brand">
+        <span style="color:#d4af37;">Alma</span><span style="color:#fff;"> de </span><span style="color:#d4af37;">Oro</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
+          <li class="nav-item"><a href="shop.html" class="nav-link">Tienda</a></li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+
+          <!-- Sin icono del carrito -->
+          <li class="nav-item mx-2">
+            <a href="#" class="nav-link"><i class="fas fa-heart text-dorado"></i></a>
+          </li>
+
+          <!-- Menú de cuenta -->
+          <li class="nav-item dropdown" id="account-menu"></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- CARRITO -->
+  <div class="container cart-container">
+    <h2 class="text-center mb-4" style="color:#d4af37;">🛍 Tu Carrito</h2>
+    <div id="cart-items"></div>
+
+    <div class="cart-summary">
+      <h4>Total: <span id="cart-total">$0</span></h4>
+      <button class="btn-checkout">Finalizar compra</button>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 <span style="color:#d4af37;">Alma de Oro</span> — Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- JS -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+  <script>
+    // === MENÚ DE USUARIO (MISMO DE SHOP) ===
+    async function setupUserMenu() {
+      const menu = document.getElementById("account-menu");
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        menu.innerHTML = `
+          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+            Mi cuenta
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="sesion.html">Iniciar sesión</a>
+            <a class="dropdown-item" href="register.html">Registrarse</a>
+          </div>`;
+        return;
+      }
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/users/me/", {
+          headers: { Authorization: "Bearer " + token },
+        });
+        if (!res.ok) throw new Error("Token inválido");
+        const user = await res.json();
+
+        menu.innerHTML = `
+          <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-toggle="dropdown">
+            <i class="fas fa-user-circle"></i> ${user.username}
+          </button>
+          <div class="dropdown-menu dropdown-menu-right">
+            <a class="dropdown-item" href="perfil.html">Mi perfil</a>
+            <a class="dropdown-item text-danger" href="#" id="logout">Cerrar sesión</a>
+          </div>`;
+
+        document.getElementById("logout").addEventListener("click", (e) => {
+          e.preventDefault();
+          Swal.fire({
+            icon: "question",
+            title: "¿Cerrar sesión?",
+            showCancelButton: true,
+            confirmButtonText: "Sí, salir",
+            cancelButtonText: "Cancelar",
+            background: "#111",
+            color: "#fff",
+            confirmButtonColor: "#d4af37",
+          }).then((r) => {
+            if (r.isConfirmed) {
+              localStorage.removeItem("accessToken");
+              localStorage.removeItem("refreshToken");
+              window.location.href = "index.html";
+            }
+          });
+        });
+      } catch {
+        localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
+      }
+    }
+
+    // === FUNCIONES DEL CARRITO ===
+    function getCart() {
+      try { return JSON.parse(localStorage.getItem("cart")) || []; } catch { return []; }
+    }
+
+    function setCart(c) {
+      localStorage.setItem("cart", JSON.stringify(c));
+    }
+
+    function renderCart() {
+      const container = document.getElementById("cart-items");
+      const cart = getCart();
+      container.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        container.innerHTML = `<p class="text-center text-muted">Tu carrito está vacío 🛒</p>`;
+        document.getElementById("cart-total").textContent = "$0";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        const div = document.createElement("div");
+        div.classList.add("cart-item");
+        div.innerHTML = `
+          <img src="${item.image}" alt="${item.name}">
+          <div class="cart-item-info">
+            <h5>${item.name}</h5>
+            <p>$${item.price.toLocaleString()}</p>
+          </div>
+          <div class="quantity-controls">
+            <button class="btn-decrease" data-index="${index}">−</button>
+            <span>${item.quantity}</span>
+            <button class="btn-increase" data-index="${index}">+</button>
+          </div>
+          <span class="btn-remove" data-index="${index}">
+            <i class="fas fa-trash-alt"></i>
+          </span>`;
+        container.appendChild(div);
+      });
+
+      document.getElementById("cart-total").textContent = "$" + total.toLocaleString();
+      attachCartEvents();
+    }
+
+    function attachCartEvents() {
+      document.querySelectorAll(".btn-increase").forEach(btn => {
+        btn.onclick = () => {
+          const i = btn.dataset.index;
+          const c = getCart();
+          c[i].quantity++;
+          setCart(c);
+          renderCart();
+        };
+      });
+
+      document.querySelectorAll(".btn-decrease").forEach(btn => {
+        btn.onclick = () => {
+          const i = btn.dataset.index;
+          const c = getCart();
+          if (c[i].quantity > 1) c[i].quantity--;
+          else c.splice(i, 1);
+          setCart(c);
+          renderCart();
+        };
+      });
+
+      document.querySelectorAll(".btn-remove").forEach(btn => {
+        btn.onclick = () => {
+          const i = btn.dataset.index;
+          const c = getCart();
+          c.splice(i, 1);
+          setCart(c);
+          renderCart();
+        };
+      });
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setupUserMenu();
+      renderCart();
+
+      document.querySelector(".btn-checkout").addEventListener("click", () => {
+        const cart = getCart();
+        if (cart.length === 0) {
+          Swal.fire({
+            icon: "info",
+            title: "Carrito vacío",
+            text: "Agrega productos antes de finalizar tu compra",
+            background: "#111",
+            color: "#fff",
+            confirmButtonColor: "#d4af37",
+          });
+          return;
+        }
+        Swal.fire({
+          icon: "success",
+          title: "Compra realizada",
+          text: "¡Gracias por tu compra en Alma de Oro! ✨",
+          background: "#111",
+          color: "#fff",
+          confirmButtonColor: "#d4af37",
+        }).then(() => {
+          localStorage.removeItem("cart");
+          renderCart();
+        });
+      });
+    });
+  </script>
+</body>
+</html>
+
+
+
+

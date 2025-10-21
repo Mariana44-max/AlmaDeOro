@@ -9814,4 +9814,19 @@ a.text-dark:hover, a.text-dark:focus {
     font-size: 1rem;
   }
 }
-
+.btn-dorado {
+  background-color: #d4af37;
+  color: #000;
+  font-weight: 600;
+  border-radius: 25px;
+  border: none;
+  padding: 6px 20px;
+  transition: 0.3s;
+}
+.btn-dorado:hover {
+  background-color: #b89b2e;
+  color: #000;
+}
+.text-dorado {
+  color: #d4af37 !important;
+}
