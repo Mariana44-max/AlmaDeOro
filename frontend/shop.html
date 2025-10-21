@@ -133,6 +133,34 @@
     footer a:hover {
       text-decoration: underline;
     }
+     .brand {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    text-decoration: none;
+    line-height: 1.1;
+  }
+
+  .brand .left {
+    color: #d4af37;
+  }
+
+  .brand .mid {
+    color: #fff;
+  }
+
+  .brand .right {
+    color: #d4af37;
+    display: block;
+  }
+
+  /* Ajuste para mantener alineación horizontal similar al index */
+  @media (max-width: 992px) {
+    .brand {
+      font-size: 1.5rem;
+    }
+  }
   </style>
 </head>
 
@@ -140,9 +168,10 @@
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark py-3">
     <div class="container">
-      <a href="index.html" class="navbar-brand">
-        <span style="color:#d4af37;">Alma</span><span style="color:#fff;"> de </span><span style="color:#d4af37;">Oro</span>
-      </a>
+      <a href="index.html" class="navbar-brand brand">
+  <span class="left">ALMA</span><span class="mid"> DE </span><span class="right">ORO</span>
+</a>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -150,7 +179,7 @@
         <ul class="navbar-nav align-items-center">
           <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
           <li class="nav-item"><a href="shop.html" class="nav-link active">Tienda</a></li>
-          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
+         
 
           <!-- Iconos -->
           <li class="nav-item mx-2">
@@ -241,7 +270,7 @@
         <div class="row">
           <div class="col-md-4 mb-4">
             <div class="product-card" data-id="1" data-name="Anillo Aurora Brillante" data-price="180000" data-image="img/product-1.jpg">
-              <img src="AuroraBrillante.png" alt="Anillo Clásico">
+              <img src="img/Anillos/AuroraBrillante.png" alt="Anillo Clásico">
               <div class="product-info">
                 <h5>Anillo Aurora Brillante</h5>
                 <p>$180.000</p>
@@ -252,7 +281,7 @@
 
           <div class="col-md-4 mb-4">
             <div class="product-card" data-id="2" data-name="Collar Aurora De Amor" data-price="250000" data-image="img/product-2.jpg">
-              <img src="AuroraDeAmor.png" alt="Collar Dorado Fino">
+              <img src="img/Collares/AuroraDeAmor.png" alt="Collar Dorado Fino">
               <div class="product-info">
                 <h5>Collar Aurora De Amor</h5>
                 <p>$250.000</p>
@@ -263,7 +292,7 @@
 
           <div class="col-md-4 mb-4">
             <div class="product-card" data-id="3" data-name="Pulsera Aurora Real" data-price="220000" data-image="img/product-3.jpg">
-              <img src="AuroraReal.png" alt="Pulsera de Lujo">
+              <img src="img/Pulseras/AuroraReal.png" alt="Pulsera de Lujo">
               <div class="product-info">
                 <h5>Pulsera Aurora Real</h5>
                 <p>$220.000</p>
