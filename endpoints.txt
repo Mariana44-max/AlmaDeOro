@@ -1,10 +1,22 @@
 TOKENS = http://127.0.0.1:8000/api/auth/token/
-    {
-      "email": "admin@admin.com",
-      "password": "admin"
-    }
+{
+  "email": "administrador@admin.com",
+  "password": "admin"
+}
 
 {
-  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MTYzNDMxMSwiaWF0IjoxNzYxMDI5NTExLCJqdGkiOiIxNzEyN2Y4MzYzZjY0ZmI3YmM3MzhmOTk1MDIwOGQxYiIsInVzZXJfaWQiOjZ9.2__fptaCN-1ygC0PvytkU78P1tV7jqRBUbMS3GRwqJ8",
-  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYxMDMzMTExLCJpYXQiOjE3NjEwMjk1MTEsImp0aSI6Ijg2MjY5Nzk1NWU2NTRmMzNiMjk1OTQxNTU1MDBkOWE3IiwidXNlcl9pZCI6Nn0.c13M8IgmbLQmT7O9wNAO84OmJO7f6I-Yj8QESYcw-3c"
+  "name": "Encanto Natural",
+  "description": "Pulsera elegante de oro con piedras naturales finamente pulidas y detalladas",
+  "weight": 20,
+  "stock": 30,
+  "price": 600000,
+  "size": "18 cm",
+  "material": "Oro 24k con cuarzo y amatista",
+  "is_active": true,
+  "image": "./frontend/img/Pulseras/EncantoNatural.png"
+}
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MTYzNjQ1OSwiaWF0IjoxNzYxMDMxNjU5LCJqdGkiOiJmMDg5YjZiMDVlYTM0ZjgxOGQ3OTg3YWM4YTY0ZmYwOSIsInVzZXJfaWQiOjl9.4LEq1GFVabxEH7JuksOxPciaaOPTx4uV04WR9CltFkQ",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYxMDM1MjU5LCJpYXQiOjE3NjEwMzE2NTksImp0aSI6IjE3MDZhMjI1ZWNhZTRjNDZhOGU5YjFmYjcwOWFjZTcxIiwidXNlcl9pZCI6OX0.OLIlAqkaqfV-J9BURSCQCq97MTGV-gXVrJHEC2U1fNw"
 }
