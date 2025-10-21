@@ -25,19 +25,16 @@ class CartItem(models.Model):
 # ORDENES (actualizado)
 # -------------------------------
 class Order(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)  # ✅ cambia aquí también
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=20, default="pending")
     total_cents = models.IntegerField(default=0)
+
+    # 🆕 Datos de envío
     nombre = models.CharField(max_length=100, blank=True)
     direccion = models.TextField(blank=True)
     telefono = models.CharField(max_length=20, blank=True)
 
-    def total(self):
-        return self.total_cents / 100
-
-    def __str__(self):
-        return f"Orden #{self.id} de {self.user.username}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, related_name="items", on_delete=models.CASCADE)
