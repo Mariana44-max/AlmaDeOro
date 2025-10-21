@@ -147,6 +147,10 @@
       .nav-links{display:none}
       .right{margin-left:auto}
     }
+
+    /* ===== FIX MENÚ DESPLEGABLE (evita que se cierre al pasar del botón al panel) ===== */
+    .dropdown.open .dropdown-menu,
+    .dropdown:focus-within .dropdown-menu { display:block !important; }
   </style>
 </head>
 <body>
@@ -294,6 +298,27 @@
 
   <!-- SCRIPT PRINCIPAL -->
  <script>
+  // ===== Mini helper: mantener drop-downs abiertos al pasar del botón al panel =====
+  function enhanceDropdowns(root=document){
+    root.querySelectorAll('.dropdown').forEach((dd)=>{
+      const t = dd.querySelector('.dropdown-toggle') || dd.querySelector('a,button');
+      const m = dd.querySelector('.dropdown-menu');
+      if(!t || !m) return;
+      let timer=null;
+      const open=()=>{ dd.classList.add('open'); if(timer){clearTimeout(timer); timer=null;} };
+      const closeSoon=()=>{ timer=setTimeout(()=>dd.classList.remove('open'),180); };
+
+      t.addEventListener('mouseenter', open);
+      t.addEventListener('mouseleave', closeSoon);
+      m.addEventListener('mouseenter', open);
+      m.addEventListener('mouseleave', closeSoon);
+      // opcional: toggle por click (útil en móvil)
+      t.addEventListener('click', (e)=>{ e.preventDefault(); dd.classList.toggle('open'); });
+      // cerrar al hacer click fuera
+      document.addEventListener('click', (e)=>{ if(!dd.contains(e.target)) dd.classList.remove('open'); });
+    });
+  }
+
   // ===============================
   // 🔐 USUARIO
   // ===============================
@@ -308,6 +333,7 @@
           <a href="sesion.html">Iniciar sesión</a>
           <a href="register.html">Registrarse</a>
         </div>`;
+      enhanceDropdowns(menu); // <-- activar hover-intent en este menú
       return;
     }
 
@@ -324,6 +350,7 @@
           <a href="perfil.html">Mi perfil</a>
           <a href="#" id="logout" class="text-danger">Cerrar sesión</a>
         </div>`;
+      enhanceDropdowns(menu); // <-- activar hover-intent también cuando hay usuario
 
       document.getElementById("logout").addEventListener("click", function (e) {
         e.preventDefault();
@@ -347,6 +374,14 @@
     } catch {
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
+      // fallback anónimo
+      menu.innerHTML = `
+        <button class="dropdown-toggle" type="button">Mi cuenta</button>
+        <div class="dropdown-menu">
+          <a href="sesion.html">Iniciar sesión</a>
+          <a href="register.html">Registrarse</a>
+        </div>`;
+      enhanceDropdowns(menu);
     }
   }
 
@@ -406,6 +441,7 @@
     if (typeof WOW !== "undefined") new WOW({ mobile: false }).init();
 
     setupUserMenu();
+    enhanceDropdowns();   // <-- activar para Categorías del header
     updateCartCount();
 
     document.querySelectorAll(".btn-cart").forEach(btn => {
