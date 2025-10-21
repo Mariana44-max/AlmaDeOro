@@ -9758,3 +9758,60 @@ a.text-dark:hover, a.text-dark:focus {
     transform: translateY(-15px);
   }
 }
+/* Corrige posición del texto del carrusel */
+.owl-carousel .item {
+  position: relative;
+  height: 90vh;
+  overflow: hidden;
+}
+
+.owl-carousel .item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.85;
+  filter: brightness(65%);
+}
+
+/* Centrar el contenido del texto */
+.carousel-caption {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 800px;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 40px 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+}
+
+/* Texto */
+.carousel-caption h1 {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #d4af37;
+  text-shadow: 0 0 10px #000;
+}
+
+.carousel-caption p {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+/* Ajuste responsivo */
+@media (max-width: 768px) {
+  .carousel-caption {
+    padding: 25px;
+  }
+  .carousel-caption h1 {
+    font-size: 1.8rem;
+  }
+  .carousel-caption p {
+    font-size: 1rem;
+  }
+}
+

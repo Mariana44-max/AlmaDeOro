@@ -2,318 +2,310 @@
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Alma de Oro - Joyas Exclusivas</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Alma de Oro - Joyas de lujo, anillos, collares, aretes y más.">
-
-  <!-- Favicon -->
+  <title>Alma de Oro - Joyas de Lujo</title>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <link href="img/favicon.ico" rel="icon">
 
-  <!-- Google Fonts -->
+  <!-- Fuentes y librerías -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-
-  <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
-  <!-- CSS Libraries -->
-  <link href="lib/animate/animate.min.css" rel="stylesheet">
   <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-
-  <!-- Bootstrap Stylesheet -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
   <link href="css/style.css" rel="stylesheet">
-
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
   <style>
     body {
+      background-color: #0a0a0a;
+      color: #fff;
       font-family: 'Roboto', sans-serif;
+      overflow-x: hidden;
     }
-    .btn-gold {
-      background-color: #d4af37 !important;
+
+    /* NAVBAR (igual que shop.html) */
+    .navbar-dark {
+      background-color: #000 !important;
+      border-bottom: 1px solid #d4af37;
+    }
+    .navbar-dark .nav-link {
       color: #fff !important;
-      border: none;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    .navbar-dark .nav-link:hover,
+    .navbar-dark .nav-link.active {
+      color: #d4af37 !important;
+    }
+    .navbar-brand span:first-child {
+      color: #d4af37;
+    }
+    .navbar-brand span:nth-child(2) {
+      color: #fff;
+    }
+    .navbar-brand span:last-child {
+      color: #d4af37;
+    }
+
+    /* Dropdown categorías */
+    .dropdown-menu-dark {
+      background-color: #111;
+      border: 1px solid #d4af37;
+    }
+    .dropdown-menu-dark a {
+      color: #d4af37;
+    }
+    .dropdown-menu-dark a:hover {
+      background-color: #d4af37;
+      color: #000;
+    }
+
+    /* CARRUSEL */
+    .owl-carousel .item {
+      position: relative;
+      height: 90vh;
+      overflow: hidden;
+      width: 100%;
+    }
+    .carousel-image-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .carousel-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(60%);
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+    }
+    .carousel-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.55);
+      padding: 50px 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+      max-width: 700px;
+    }
+    .carousel-content h1 {
+      font-size: 3rem;
+      color: #d4af37;
+      font-weight: 700;
+      margin-bottom: 15px;
+      text-shadow: 0 0 10px #000;
+    }
+    .carousel-content p {
+      font-size: 1.2rem;
+      color: #fff;
+      margin-bottom: 25px;
+    }
+    .btn-dorado {
+      background-color: #d4af37;
+      color: #000;
       font-weight: 600;
+      padding: 10px 30px;
+      border-radius: 30px;
+      border: none;
       transition: all 0.3s ease;
     }
-    .btn-gold:hover {
-      background-color: #b7950b !important;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
+    .btn-dorado:hover {
+      background-color: #b89b2e;
+      transform: scale(1.05);
     }
+
+    /* PRODUCTOS DESTACADOS */
     .product-card {
-      border: 1px solid #eee;
+      background-color: #111;
+      border: 1px solid #333;
       border-radius: 10px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
     .product-card:hover {
       transform: translateY(-5px);
-      box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+      box-shadow: 0 0 15px rgba(212,175,55,0.3);
     }
-    .product-price {
+    .product-card img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+    }
+    .product-info {
+      text-align: center;
+      padding: 15px;
+    }
+    .product-info h5 {
       color: #d4af37;
-      font-weight: 700;
+      font-weight: 600;
     }
+    .product-info p {
+      color: #ccc;
+    }
+
+    /* FOOTER */
     footer {
       background-color: #000;
-      color: #d4af37;
+      color: #aaa;
+      padding: 50px 0 20px;
+      border-top: 1px solid #d4af37;
     }
     footer a {
-      color: #fff;
+      color: #d4af37;
+      text-decoration: none;
     }
     footer a:hover {
-      color: #d4af37;
+      text-decoration: underline;
     }
-    .category-title {
-      color: #d4af37 !important;
-      font-weight: bold;
-      text-transform: uppercase;
+
+    @media (max-width: 768px) {
+      .carousel-content {
+        padding: 25px;
+      }
+      .carousel-content h1 {
+        font-size: 1.8rem;
+      }
+      .carousel-content p {
+        font-size: 1rem;
+      }
     }
   </style>
 </head>
 
 <body>
-
-  <!-- 🔸 Logo -->
-  <div class="container-fluid bg-light py-3 px-xl-5 d-none d-lg-flex align-items-center">
-    <div class="col-lg-4">
-      <a href="index.html" class="text-decoration-none">
-        <h1 class="m-0" style="font-weight:700;">
-          <span style="color:#D4AF37">Alma</span> <span style="color:#000">de</span> <span style="color:#D4AF37">Oro</span>
-        </h1>
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark py-3">
+    <div class="container">
+      <a href="index.html" class="navbar-brand">
+        <span>Alma</span><span> de </span><span>Oro</span>
       </a>
-    </div>
-    <div class="col-lg-4 text-center">
-      <form>
-        <div class="input-group">
-          <input type="text" class="form-control border-dark" placeholder="Buscar joyas...">
-          <div class="input-group-append">
-            <button class="btn btn-gold">Buscar</button>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="col-lg-4 text-right">
-      <div id="account-menu" class="btn-group"></div>
-    </div>
-  </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
+        <ul class="navbar-nav align-items-center">
+          <li class="nav-item"><a href="index.html" class="nav-link active">Inicio</a></li>
+          <li class="nav-item"><a href="shop.html" class="nav-link">Tienda</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Categorías</a>
+            <div class="dropdown-menu dropdown-menu-dark">
+              <a class="dropdown-item" href="#">Anillos</a>
+              <a class="dropdown-item" href="#">Collares</a>
+              <a class="dropdown-item" href="#">Pulseras</a>
+              <a class="dropdown-item" href="#">Aretes</a>
+            </div>
+          </li>
+          <li class="nav-item"><a href="contact.html" class="nav-link">Contacto</a></li>
 
-  <!-- 🔸 Navbar -->
-  <div class="container-fluid px-0">
-  <div class="row no-gutters align-items-center bg-dark">
-    <!-- Categorías -->
-   <div class="col-lg-3 d-none d-lg-block p-0">
-  <div class="dropdown position-relative">
-    <a class="btn d-flex align-items-center justify-content-between w-100 px-4 py-3"
-       data-toggle="collapse"
-       href="#navbar-vertical"
-       role="button"
-       aria-expanded="false"
-       aria-controls="navbar-vertical"
-       style="background-color:#2c2f32; border:none;">
-      <h6 class="m-0 text-uppercase" style="color:#d4af37; font-weight:bold; letter-spacing:0.5px;">
-        Categorías
-      </h6>
-      <i class="fa fa-angle-down" style="color:#d4af37;"></i>
-    </a>
-
-    <div id="navbar-vertical"
-         class="collapse position-absolute w-100"
-         style="
-           top:65px;
-           left:0;
-           background-color:#2c2f32;
-           z-index:9999;
-           border-top:2px solid #d4af37;
-           border-radius:0 0 6px 6px;
-           box-shadow:0 4px 15px rgba(212, 175, 55, 0.25);
-           transition:all 0.3s ease;">
-      <div class="navbar-nav w-100 py-2 px-3">
-        <a href="#" class="nav-item nav-link text-light py-2" style="transition:all 0.3s ease;">Anillos</a>
-        <a href="#" class="nav-item nav-link text-light py-2" style="transition:all 0.3s ease;">Collares</a>
-        <a href="#" class="nav-item nav-link text-light py-2" style="transition:all 0.3s ease;">Aretes</a>
-        <a href="#" class="nav-item nav-link text-light py-2" style="transition:all 0.3s ease;">Pulseras</a>
+          <li class="nav-item mx-2">
+            <a href="#" class="nav-link"><i class="fas fa-heart text-dorado"></i></a>
+          </li>
+          <li class="nav-item mx-2">
+            <a href="#" class="nav-link position-relative">
+              <i class="fas fa-shopping-cart text-dorado"></i>
+              <span class="badge badge-warning position-absolute" style="top:2px; right:-6px; background:#d4af37; color:#000;">0</span>
+            </a>
+          </li>
+          <li class="nav-item dropdown" id="account-menu"></li>
+        </ul>
       </div>
     </div>
-  </div>
-</div>
+  </nav>
 
-<style>
-  /* Efecto hover en links del menú */
-  #navbar-vertical a.nav-link:hover {
-    color: #d4af37 !important;
-    transform: translateX(4px);
-  }
-
-  /* Sombra al abrir el menú */
-  #navbar-vertical.show {
-    box-shadow: 0 8px 20px rgba(212, 175, 55, 0.4);
-  }
-</style>
-
-
-    <!-- Navbar -->
-    <div class="col-lg-9">
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark py-3 px-4 mb-0">
-        <a href="index.html" class="navbar-brand d-block d-lg-none text-gold" style="color:#d4af37;">Alma de Oro</a>
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-          <div class="navbar-nav mr-auto">
-            <a href="index.html" class="nav-item nav-link active" style="color:#d4af37;">Home</a>
-            <a href="shop.html" class="nav-item nav-link">Shop</a>
-            <a href="shop-detail.html" class="nav-item nav-link">Shop Detail</a>
-            <div class="nav-item dropdown">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages</a>
-              <div class="dropdown-menu rounded-0 m-0">
-                <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                <a href="checkout.html" class="dropdown-item">Checkout</a>
-              </div>
-            </div>
-            <a href="contact.html" class="nav-item nav-link">Contact</a>
-          </div>
-
-          <div class="navbar-nav ml-auto">
-            <a href="#" class="btn px-0 text-light"><i class="fas fa-heart"></i></a>
-            <a href="#" class="btn px-3 text-light"><i class="fas fa-shopping-cart"></i></a>
-          </div>
+  <!-- CARRUSEL -->
+  <div class="owl-carousel owl-theme">
+    <div class="item">
+      <div class="carousel-image-container">
+        <img src="img/banner-joya.jpg" alt="Joyas de lujo">
+        <div class="carousel-content" data-aos="zoom-in">
+          <h1>Lujo que refleja tu esencia</h1>
+          <p>Descubre la elegancia eterna en cada detalle</p>
+          <a href="shop.html" class="btn-dorado">Ver colección</a>
         </div>
-      </nav>
+      </div>
     </div>
-  </div>
-</div>
-
-
-  <!-- 🔸 Carrusel -->
-  <div class="container-fluid mb-3">
-    <div class="row px-xl-5">
-      <div class="col-lg-12">
-        <div id="header-carousel" class="carousel slide carousel-fade mb-30" data-ride="carousel">
-          <ol class="carousel-indicators">
-            <li data-target="#header-carousel" data-slide-to="0" class="active"></li>
-            <li data-target="#header-carousel" data-slide-to="1"></li>
-          </ol>
-          <div class="carousel-inner">
-            <div class="carousel-item active" style="height:450px;">
-              <img class="w-100 h-100" src="img/joyas1.jpg" style="object-fit:cover;">
-              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <h1 class="display-4 text-white mb-3">Joyas que cuentan historias</h1>
-                <a href="shop.html" class="btn btn-gold py-2 px-4 mt-3">Explorar</a>
-              </div>
-            </div>
-            <div class="carousel-item" style="height:450px;">
-              <img class="w-100 h-100" src="img/joyas2.jpg" style="object-fit:cover;">
-              <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
-                <h1 class="display-4 text-white mb-3">Lujo eterno, esencia dorada</h1>
-                <a href="shop.html" class="btn btn-gold py-2 px-4 mt-3">Ver más</a>
-              </div>
-            </div>
-          </div>
+    <div class="item">
+      <div class="carousel-image-container">
+        <img src="img/banner-coleccion.jpg" alt="Colección exclusiva">
+        <div class="carousel-content" data-aos="zoom-in">
+          <h1>Colección Exclusiva 2025</h1>
+          <p>Hecha a mano con pasión, diseñada para brillar contigo</p>
+          <a href="shop.html" class="btn-dorado">Explorar ahora</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 🔸 Beneficios -->
-  <div class="container-fluid py-5">
-    <div class="row px-xl-5 text-center">
-      <div class="col-md-4">
-        <i class="fa fa-shipping-fast fa-3x mb-3" style="color:#d4af37;"></i>
-        <h5>Envío Gratis</h5>
-        <p>En todos los pedidos a nivel nacional.</p>
-      </div>
-      <div class="col-md-4">
-        <i class="fa fa-gem fa-3x mb-3" style="color:#d4af37;"></i>
-        <h5>Garantía de Calidad</h5>
-        <p>Joyas de oro y plata certificadas.</p>
-      </div>
-      <div class="col-md-4">
-        <i class="fa fa-headset fa-3x mb-3" style="color:#d4af37;"></i>
-        <h5>Atención Personalizada</h5>
-        <p>Te acompañamos en cada compra.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- 🔸 Productos destacados -->
-  <div class="container py-5">
-    <h2 class="text-center mb-5" style="color:#d4af37;">Joyas Destacadas</h2>
+  <!-- PRODUCTOS DESTACADOS -->
+  <div class="container my-5">
+    <h2 class="text-center mb-4" style="color:#d4af37;">Destacados de la Semana</h2>
     <div class="row">
-      <div class="col-md-3 mb-4">
-        <div class="product-card text-center p-3">
-          <img src="img/anillo1.jpg" class="img-fluid mb-3" alt="Anillo de Oro">
-          <h6>Anillo de Oro 24K</h6>
-          <p class="product-price">$520.000</p>
-          <button class="btn btn-gold btn-sm">Agregar al carrito</button>
+      <div class="col-md-4 mb-4">
+        <div class="product-card" data-aos="fade-up">
+          <img src="img/product-1.jpg" alt="Anillo de oro">
+          <div class="product-info">
+            <h5>Anillo Clásico</h5>
+            <p>$180.000</p>
+          </div>
         </div>
       </div>
-      <div class="col-md-3 mb-4">
-        <div class="product-card text-center p-3">
-          <img src="img/collar1.jpg" class="img-fluid mb-3" alt="Collar de Oro">
-          <h6>Collar con Dije de Diamante</h6>
-          <p class="product-price">$1.200.000</p>
-          <button class="btn btn-gold btn-sm">Agregar al carrito</button>
+      <div class="col-md-4 mb-4">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="200">
+          <img src="img/product-2.jpg" alt="Collar elegante">
+          <div class="product-info">
+            <h5>Collar Dorado Fino</h5>
+            <p>$250.000</p>
+          </div>
         </div>
       </div>
-      <div class="col-md-3 mb-4">
-        <div class="product-card text-center p-3">
-          <img src="img/aretes1.jpg" class="img-fluid mb-3" alt="Aretes">
-          <h6>Aretes de Plata Italiana</h6>
-          <p class="product-price">$280.000</p>
-          <button class="btn btn-gold btn-sm">Agregar al carrito</button>
-        </div>
-      </div>
-      <div class="col-md-3 mb-4">
-        <div class="product-card text-center p-3">
-          <img src="img/pulsera1.jpg" class="img-fluid mb-3" alt="Pulsera">
-          <h6>Pulsera de Oro Rosa</h6>
-          <p class="product-price">$390.000</p>
-          <button class="btn btn-gold btn-sm">Agregar al carrito</button>
+      <div class="col-md-4 mb-4">
+        <div class="product-card" data-aos="fade-up" data-aos-delay="400">
+          <img src="img/product-3.jpg" alt="Pulsera de lujo">
+          <div class="product-info">
+            <h5>Pulsera de Lujo</h5>
+            <p>$220.000</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 🔸 Footer -->
-  <footer class="text-center text-lg-start pt-5 mt-5">
-    <div class="container text-md-left">
-      <div class="row text-md-left">
-        <div class="col-md-4">
-          <h5 class="text-uppercase mb-4">Alma de Oro</h5>
-          <p>Joyas exclusivas hechas con pasión y elegancia. Tu brillo empieza aquí.</p>
-        </div>
-        <div class="col-md-4">
-          <h5 class="text-uppercase mb-4">Enlaces</h5>
-          <ul class="list-unstyled">
-            <li><a href="shop.html">Tienda</a></li>
-            <li><a href="contact.html">Contacto</a></li>
-            <li><a href="perfil.html">Mi Perfil</a></li>
-          </ul>
-        </div>
-        <div class="col-md-4">
-          <h5 class="text-uppercase mb-4">Síguenos</h5>
-          <a href="#" class="btn btn-gold btn-sm m-1"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="btn btn-gold btn-sm m-1"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="btn btn-gold btn-sm m-1"><i class="fab fa-whatsapp"></i></a>
-        </div>
-      </div>
-    </div>
-    <div class="text-center py-3 border-top mt-4">
-      © 2025 <strong>Alma de Oro</strong> — Todos los derechos reservados.
+  <!-- FOOTER -->
+  <footer class="mt-5">
+    <div class="container text-center">
+      <p>&copy; 2025 <span style="color:#d4af37;">Alma de Oro</span> — Todos los derechos reservados.</p>
+      <p>Síguenos en:
+        <a href="#"><i class="fab fa-instagram mx-2"></i></a>
+        <a href="#"><i class="fab fa-facebook-f mx-2"></i></a>
+        <a href="#"><i class="fab fa-whatsapp mx-2"></i></a>
+      </p>
     </div>
   </footer>
 
-  <!-- Scripts -->
+  <!-- JS -->
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/easing/easing.min.js"></script>
   <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 
-  <!-- 🔸 Script de sesión -->
   <script>
+    $('.owl-carousel').owlCarousel({
+      items: 1,
+      loop: true,
+      autoplay: true,
+      autoplayTimeout: 6000,
+      animateOut: 'fadeOut',
+      dots: false
+    });
+
+    AOS.init({ duration: 1000, once: true, easing: 'ease-in-out' });
+
     document.addEventListener("DOMContentLoaded", async () => {
       const navbar = document.getElementById("account-menu");
       const token = localStorage.getItem("accessToken");
@@ -348,28 +340,11 @@
           </div>`;
 
         document.getElementById("logout").addEventListener("click", () => {
-          Swal.fire({
-            icon: "question",
-            title: "¿Cerrar sesión?",
-            showCancelButton: true,
-            confirmButtonText: "Sí, salir",
-            cancelButtonText: "Cancelar",
-            confirmButtonColor: "#e74c3c",
-          }).then((result) => {
-            if (result.isConfirmed) {
-              localStorage.removeItem("accessToken");
-              localStorage.removeItem("refreshToken");
-              Swal.fire({
-                icon: "success",
-                title: "Sesión cerrada",
-                text: "Vuelve pronto ✨",
-                confirmButtonColor: "#d4af37",
-              }).then(() => (window.location.href = "index.html"));
-            }
-          });
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
+          window.location.href = "index.html";
         });
       } catch (error) {
-        console.error("Error verificando usuario:", error);
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
       }
@@ -377,6 +352,12 @@
   </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
