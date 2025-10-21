@@ -285,67 +285,80 @@
   }
 
   // === Finalizar compra ===
-  async function checkout() {
-    const token = localStorage.getItem("accessToken");
-    const cart = getCart();
+ // === Finalizar compra ===
+async function checkout() {
+  const token = localStorage.getItem("accessToken");
+  const cart = getCart();
 
-    if (!token) {
-      Swal.fire({
-        icon: "warning",
-        title: "Inicia sesión",
-        text: "Debes iniciar sesión para continuar.",
-        background: "#111",
-        color: "#fff",
-        confirmButtonColor: "#d4af37",
-      });
-      return;
-    }
-
-    if (cart.length === 0) {
-      Swal.fire({
-        icon: "info",
-        title: "Carrito vacío",
-        text: "Agrega productos antes de finalizar tu compra.",
-        background: "#111",
-        color: "#fff",
-        confirmButtonColor: "#d4af37",
-      });
-      return;
-    }
-
-    try {
-      const res = await fetch("http://127.0.0.1:8000/api/orders/checkout/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (!res.ok) throw new Error("Error al procesar el pedido");
-      localStorage.removeItem("cart");
-
-      Swal.fire({
-        icon: "success",
-        title: "Pedido creado",
-        text: "Tu pedido fue registrado correctamente 💎",
-        background: "#111",
-        color: "#fff",
-        confirmButtonColor: "#d4af37",
-      }).then(() => {
-        window.location.href = "checkout.html"; // 🚀 Redirige aquí
-      });
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "No se pudo completar la compra.",
-        background: "#111",
-        color: "#fff",
-        confirmButtonColor: "#d4af37",
-      });
-    }
+  if (!token) {
+    Swal.fire({
+      icon: "warning",
+      title: "Inicia sesión",
+      text: "Debes iniciar sesión para continuar.",
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#d4af37",
+    });
+    return;
   }
+
+  if (cart.length === 0) {
+    Swal.fire({
+      icon: "info",
+      title: "Carrito vacío",
+      text: "Agrega productos antes de finalizar tu compra.",
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#d4af37",
+    });
+    return;
+  }
+
+  try {
+    // 🔹 Enviar carrito al backend (solo para crear la orden vacía)
+    const res = await fetch("http://127.0.0.1:8000/api/orders/checkout/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      // 🔹 Cuerpo con datos vacíos (se llenan en checkout.html)
+      body: JSON.stringify({
+        nombre: "",
+        direccion: "",
+        telefono: ""
+      })
+    });
+
+    if (!res.ok) throw new Error("Error al procesar el pedido");
+
+    // Vaciar carrito local y redirigir al formulario de envío
+    localStorage.removeItem("cart");
+
+    Swal.fire({
+      icon: "success",
+      title: "Redirigiendo al formulario de envío",
+      text: "Completa tus datos para finalizar la compra 💎",
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#d4af37",
+      timer: 1500,
+      showConfirmButton: false,
+    }).then(() => {
+      window.location.href = "checkout.html";
+    });
+
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Error",
+      text: "No se pudo procesar el pedido.",
+      background: "#111",
+      color: "#fff",
+      confirmButtonColor: "#d4af37",
+    });
+  }
+}
 
   // === Inicializar ===
   document.addEventListener("DOMContentLoaded", () => {
