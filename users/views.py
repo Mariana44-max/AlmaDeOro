@@ -107,3 +107,8 @@ class ChangePasswordAPIView(APIView):
             serializer.save()
             return Response({"message": "Contraseña actualizada exitosamente"}, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = User.objects.all().order_by('id')
+    serializer_class = UserDetailSerializer
+    permission_classes = [permissions.IsAdminUser]

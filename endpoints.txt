@@ -1,0 +1,10 @@
+TOKENS = http://127.0.0.1:8000/api/auth/token/
+    {
+      "email": "admin@admin.com",
+      "password": "admin"
+    }
+
+{
+  "refresh": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoicmVmcmVzaCIsImV4cCI6MTc2MTYzNDMxMSwiaWF0IjoxNzYxMDI5NTExLCJqdGkiOiIxNzEyN2Y4MzYzZjY0ZmI3YmM3MzhmOTk1MDIwOGQxYiIsInVzZXJfaWQiOjZ9.2__fptaCN-1ygC0PvytkU78P1tV7jqRBUbMS3GRwqJ8",
+  "access": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzYxMDMzMTExLCJpYXQiOjE3NjEwMjk1MTEsImp0aSI6Ijg2MjY5Nzk1NWU2NTRmMzNiMjk1OTQxNTU1MDBkOWE3IiwidXNlcl9pZCI6Nn0.c13M8IgmbLQmT7O9wNAO84OmJO7f6I-Yj8QESYcw-3c"
+}
