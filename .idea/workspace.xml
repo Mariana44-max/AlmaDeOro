@@ -5,12 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="82e9c064-2b21-4cf3-8f89-291945131048" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/orders/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/AlmaDeOro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/AlmaDeOro.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/orders/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/orders/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/products/EncantoNatural.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/media/products/EncantoNatural_bB5vPmo.png" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,12 +33,12 @@
     &quot;assignee&quot;: &quot;SantiagoLeyton&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">{
-  &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/SantiagoLeyton/AlmaDeOro.git&quot;,
-    &quot;accountId&quot;: &quot;b635371c-3798-4177-8b39-d7b1c1389a30&quot;
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/SantiagoLeyton/AlmaDeOro.git",
+    "accountId": "24e7d1ea-fb0a-4421-96c2-cfacf2bca41e"
   }
-}</component>
+}]]></component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -112,6 +112,7 @@
       <workItem from="1760996044660" duration="3025000" />
       <workItem from="1761064375481" duration="54000" />
       <workItem from="1761064467828" duration="1936000" />
+      <workItem from="1761068698106" duration="4209000" />
     </task>
     <servers />
   </component>
