@@ -1,70 +1,202 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Iniciar sesión | Alma de Oro</title>
-  <link rel="stylesheet" href="css/stylelogin.css">
+  <title>Iniciar Sesión - Alma de Oro</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-</head>
-<body>
-<div class="container">
-  <div class="heading">Iniciar Sesión</div>
-  <form class="form" id="login-form">
-    <input placeholder="E-mail" id="email" name="email" type="email" class="input" required>
-    <input placeholder="Contraseña" id="password" name="password" type="password" class="input" required>
-    <span class="forgot-password"><a href="#">¿Olvidaste tu contraseña?</a></span>
-    <input value="Entrar" type="submit" class="login-button">
-  </form>
-  <span class="agreement">
-    ¿No tienes cuenta? <a href="register.html">Regístrate</a>
-  </span>
-</div>
 
-<script>
-document.getElementById("login-form").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value.trim();
-
-  try {
-    const response = await fetch("http://127.0.0.1:8000/api/auth/token/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      Swal.fire({
-        icon: "error",
-        title: "Error al iniciar sesión",
-        text: data.detail || "Credenciales incorrectas",
-        confirmButtonColor: "#d4af37",
-      });
-      return;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#d4af37', light: '#f4d03f', dark: '#b8962e' },
+            dark: { DEFAULT: '#0a0a0a', card: '#151515', section: '#1a1a1a', border: '#2a2a2a' }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
     }
+  </script>
 
-    localStorage.setItem("accessToken", data.access);
-    localStorage.setItem("refreshToken", data.refresh);
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .bg-pattern {
+        background-image: radial-gradient(circle, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
+        background-size: 50px 50px;
+      }
 
-    Swal.fire({
-      icon: "success",
-      title: "Bienvenido de nuevo ✨",
-      text: "Inicio de sesión exitoso.",
-      confirmButtonColor: "#27ae60",
-    }).then(() => window.location.href = "index.html");
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+      }
 
-  } catch (error) {
-    Swal.fire({
-      icon: "error",
-      title: "Error de conexión",
-      text: "No se pudo conectar al servidor.",
-      confirmButtonColor: "#d4af37",
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+    }
+  </style>
+</head>
+<body class="bg-dark font-sans text-white min-h-screen flex items-center justify-center p-6 bg-pattern relative overflow-hidden">
+
+  <!-- Back Button -->
+  <a href="index.html" class="absolute top-6 left-6 z-10 flex items-center gap-2 text-gray-400 hover:text-gold transition-colors group">
+    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+    <span>Volver al inicio</span>
+  </a>
+
+  <!-- Login Container -->
+  <div class="w-full max-w-md relative z-10">
+    <div class="bg-dark-card border border-dark-border rounded-3xl shadow-2xl p-10 backdrop-blur-sm">
+
+      <!-- Logo -->
+      <div class="text-center mb-10 space-y-3">
+        <div class="inline-block p-4 bg-gradient-to-br from-gold/20 to-gold/5 rounded-2xl mb-4 animate-float">
+          <i class="fas fa-gem text-4xl text-gold"></i>
+        </div>
+        <h1 class="font-serif text-3xl font-bold">
+          <span class="text-gold">Alma</span><span class="text-white font-light"> de </span><span class="text-gold">Oro</span>
+        </h1>
+        <p class="text-gray-400">Inicia sesión en tu cuenta</p>
+      </div>
+
+      <!-- Form -->
+      <form id="login-form" class="space-y-6">
+        <!-- Email -->
+        <div class="space-y-2">
+          <label for="email" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Correo Electrónico</label>
+          <div class="relative">
+            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="tu@email.com"
+              required
+              autocomplete="email"
+              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="space-y-2">
+          <label for="password" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Contraseña</label>
+          <div class="relative">
+            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              required
+              autocomplete="current-password"
+              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+          </div>
+        </div>
+
+        <!-- Forgot Password -->
+        <div class="text-right">
+          <a href="#" class="text-sm text-gold hover:text-gold-light transition-colors">¿Olvidaste tu contraseña?</a>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-login w-full bg-gold text-black py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300 relative overflow-hidden group">
+          <span class="relative z-10">Iniciar Sesión</span>
+          <div class="absolute inset-0 bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        </button>
+      </form>
+
+      <!-- Divider -->
+      <div class="relative my-8">
+        <div class="absolute inset-0 flex items-center">
+          <div class="w-full border-t border-dark-border"></div>
+        </div>
+        <div class="relative flex justify-center text-sm">
+          <span class="px-4 bg-dark-card text-gray-500 uppercase tracking-wide">¿No tienes cuenta?</span>
+        </div>
+      </div>
+
+      <!-- Register Link -->
+      <div class="text-center">
+        <a href="register.html" class="inline-block text-gold hover:text-gold-light font-semibold transition-colors">
+          Crear una cuenta nueva →
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Decorative Elements -->
+    <div class="absolute -top-20 -left-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+    <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+  </div>
+
+  <script>
+    document.getElementById("login-form").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const btn = e.target.querySelector('.btn-login');
+      const btnText = btn.querySelector('span');
+      const originalText = btnText.textContent;
+
+      btn.disabled = true;
+      btn.classList.add('opacity-70', 'cursor-not-allowed');
+      btnText.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Iniciando sesión...';
+
+      try {
+        const response = await fetch("http://127.0.0.1:8000/api/auth/token/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.detail || "Credenciales incorrectas");
+        }
+
+        localStorage.setItem("accessToken", data.access);
+        localStorage.setItem("refreshToken", data.refresh);
+
+        Swal.fire({
+          icon: "success",
+          title: "¡Bienvenido de nuevo!",
+          text: "Inicio de sesión exitoso",
+          background: "#0a0a0a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37",
+          timer: 2000,
+          showConfirmButton: false
+        }).then(() => {
+          window.location.href = "index.html";
+        });
+
+      } catch (error) {
+        btn.disabled = false;
+        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+        btnText.textContent = originalText;
+
+        Swal.fire({
+          icon: "error",
+          title: "Error al iniciar sesión",
+          text: error.message || "Por favor verifica tus credenciales",
+          background: "#0a0a0a",
+          color: "#fff",
+          confirmButtonColor: "#d4af37"
+        });
+      }
     });
-  }
-});
-</script>
+  </script>
+
 </body>
 </html>

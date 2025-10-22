@@ -1,444 +1,346 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
-  <meta charset="utf-8">
-  <title>Alma de Oro - Tienda</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <link href="img/favicon.ico" rel="icon">
+  <meta charset="utf-8" />
+  <title>Tienda - Alma de Oro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Fuentes y librerías -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-  <link href="lib/animate/animate.min.css" rel="stylesheet">
-  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
+  <link href="img/favicon.ico" rel="icon" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <style>
-    body {
-      background-color: #111111;
-      color: #fff;
-      font-family: 'Roboto', sans-serif;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: { DEFAULT: '#d4af37', light: '#f4d03f', dark: '#b8962e' },
+            dark: { DEFAULT: '#0a0a0a', card: '#151515', section: '#1a1a1a', border: '#2a2a2a' }
+          },
+          fontFamily: {
+            serif: ['Playfair Display', 'serif'],
+            sans: ['Roboto', 'sans-serif']
+          }
+        }
+      }
     }
-
-    /* Navbar */
-    .navbar-dark {
-      background-color: #000 !important;
-      border-bottom: 1px solid #d4af37;
-    }
-    .navbar-dark .nav-link {
-      color: #fff !important;
-      transition: color 0.3s;
-      font-weight: 500;
-      text-transform: uppercase;
-    }
-    .navbar-dark .nav-link:hover,
-    .navbar-dark .nav-link.active {
-      color: #d4af37 !important;
-    }
-
-    /* Dropdown del usuario */
-    #account-menu .dropdown-toggle {
-      color: #d4af37;
-      border: none;
-      background: transparent;
-    }
-
-    /* Filtros */
-    .filter-box {
-      background-color: #111;
-      border: 1px solid #333;
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 30px;
-      transition: box-shadow 0.3s;
-    }
-    .filter-box:hover {
-      box-shadow: 0 0 10px rgba(212,175,55,0.3);
-    }
-    .filter-box h5 {
-      color: #d4af37;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-    .filter-box label {
-      color: #ccc;
-    }
-
-    /* Productos */
-    .product-card {
-      background-color: #111;
-      border-radius: 10px;
-      overflow: hidden;
-      transition: transform 0.3s, box-shadow 0.3s;
-      border: 1px solid #333;
-      text-align: center;
-    }
-    .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 0 15px rgba(212,175,55,0.3);
-    }
-    .product-card img {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      transition: opacity 0.3s;
-    }
-    .product-card:hover img {
-      opacity: 0.85;
-    }
-    .product-info {
-      text-align: center;
-      padding: 15px;
-    }
-    .product-info h5 {
-      color: #d4af37;
-      font-weight: 600;
-    }
-    .product-info p {
-      color: #ccc;
-    }
-    .btn-cart {
-      background-color: #d4af37;
-      color: #000;
-      border: none;
-      border-radius: 20px;
-      padding: 8px 20px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.3s;
-    }
-    .btn-cart:hover {
-      background-color: #b8962e;
-    }
-
-    /* Breadcrumb */
-    .breadcrumb {
-      background: none;
-      color: #fff;
-    }
-    .breadcrumb a {
-      color: #d4af37;
-    }
-
-    /* Footer */
-    footer {
-      background-color: #000;
-      color: #aaa;
-      padding: 50px 0 20px;
-    }
-    footer a {
-      color: #d4af37;
-      text-decoration: none;
-    }
-    footer a:hover {
-      text-decoration: underline;
-    }
-     .brand {
-    display: inline-block;
-    font-weight: 700;
-    font-size: 1.7rem;
-    text-transform: uppercase;
-    text-decoration: none;
-    line-height: 1.1;
-  }
-
-  .brand .left {
-    color: #d4af37;
-  }
-
-  .brand .mid {
-    color: #e9e0e0;
-  }
-
-  .brand .right {
-    color: #d4af37;
-    display: block;
-  }
-
-  /* Ajuste para mantener alineación horizontal similar al index */
-  @media (max-width: 992px) {
-    .brand {
-      font-size: 1.5rem;
-    }
-  }
-  </style>
+  </script>
 </head>
+<body class="bg-dark font-sans text-white">
 
-<body>
   <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-dark py-3">
-    <div class="container">
-      <a href="index.html" class="navbar-brand brand">
-  <span class="left">ALMA</span><span class="mid"> DE </span><span class="right">ORO</span>
-</a>
+  <header class="sticky top-0 z-50 bg-dark/95 backdrop-blur-xl border-b border-gold/30">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex items-center justify-between gap-5 py-4">
+        <a href="index.html" class="font-serif text-2xl font-bold uppercase tracking-wide hover:scale-105 transition-transform">
+          <span class="text-gold">Alma</span><span class="text-white font-light"> de </span><span class="text-gold">Oro</span>
+        </a>
 
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarCollapse">
-        <ul class="navbar-nav align-items-center">
-          <li class="nav-item"><a href="index.html" class="nav-link">Inicio</a></li>
-          <li class="nav-item"><a href="shop.html" class="nav-link active">Tienda</a></li>
-         
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="index.html" class="relative text-sm font-medium uppercase tracking-wide text-white hover:text-gold transition-colors group">
+            Inicio<span class="absolute bottom-0 left-0 w-0 h-0.5 bg-gold transition-all duration-300 group-hover:w-full"></span>
+          </a>
+          <a href="shop.html" class="relative text-sm font-medium uppercase tracking-wide text-gold group">
+            Tienda<span class="absolute bottom-0 left-0 w-full h-0.5 bg-gold"></span>
+          </a>
+        </nav>
 
-          <!-- Iconos -->
-          <li class="nav-item mx-2">
-            <a href="#" class="nav-link"><i class="fas fa-heart text-dorado"></i></a>
-          </li>
-          <li class="nav-item mx-2 position-relative">
-            <a href="carrito.html" class="nav-link position-relative">
-              <i class="fas fa-shopping-cart" style="color:#d4af37;"></i>
-              <span id="cart-count" class="badge badge-warning position-absolute" style="top:2px; right:-6px; background:#d4af37; color:#000;">0</span>
-            </a>
-          </li>
-
-          <!-- Menú de cuenta -->
-          <li class="nav-item dropdown" id="account-menu"></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- BREADCRUMB -->
-  <div class="container my-4">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="index.html">Inicio</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Tienda</li>
-      </ol>
-    </nav>
-  </div>
-
-  <!-- CONTENIDO -->
-  <div class="container">
-    <div class="row">
-      <!-- FILTROS -->
-      <div class="col-lg-3 col-md-4">
-        <div class="filter-box">
-          <h5>Filtrar por Precio</h5>
-          <form>
-            <div class="custom-control custom-checkbox mb-2">
-              <input type="checkbox" class="custom-control-input" id="p1">
-              <label class="custom-control-label" for="p1">$0 - $100.000</label>
-            </div>
-            <div class="custom-control custom-checkbox mb-2">
-              <input type="checkbox" class="custom-control-input" id="p2">
-              <label class="custom-control-label" for="p2">$100.000 - $200.000</label>
-            </div>
-            <div class="custom-control custom-checkbox mb-2">
-              <input type="checkbox" class="custom-control-input" id="p3">
-              <label class="custom-control-label" for="p3">$200.000 - $500.000</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="p4">
-              <label class="custom-control-label" for="p4">Más de $500.000</label>
-            </div>
-          </form>
-        </div>
-
-        <div class="filter-box">
-          <h5>Filtrar por Color</h5>
-          <form>
-            <div class="custom-control custom-checkbox mb-2">
-              <input type="checkbox" class="custom-control-input" id="c1">
-              <label class="custom-control-label" for="c1">Dorado</label>
-            </div>
-            <div class="custom-control custom-checkbox mb-2">
-              <input type="checkbox" class="custom-control-input" id="c2">
-              <label class="custom-control-label" for="c2">Plateado</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="c3">
-              <label class="custom-control-label" for="c3">Rosado</label>
-            </div>
-          </form>
-        </div>
-
-        <div class="filter-box">
-          <h5>Categorías</h5>
-          <ul class="list-unstyled">
-            <li><a href="#" style="color:#d4af37;">Anillos</a></li>
-            <li><a href="#" style="color:#d4af37;">Collares</a></li>
-            <li><a href="#" style="color:#d4af37;">Pulseras</a></li>
-            <li><a href="#" style="color:#d4af37;">Aretes</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- PRODUCTOS -->
-      <div class="col-lg-9 col-md-8">
-        <div class="row">
-          <div class="col-md-4 mb-4">
-            <div class="product-card" data-id="1" data-name="Anillo Aurora Brillante" data-price="180000" data-image="img/product-1.jpg">
-              <img src="img/Anillos/AuroraBrillante.png" alt="Anillo Clásico">
-              <div class="product-info">
-                <h5>Anillo Aurora Brillante</h5>
-                <p>$180.000</p>
-                <button class="btn-cart">Añadir al carrito</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="product-card" data-id="2" data-name="Collar Aurora De Amor" data-price="250000" data-image="img/product-2.jpg">
-              <img src="img/Collares/AuroraDeAmor.png" alt="Collar Dorado Fino">
-              <div class="product-info">
-                <h5>Collar Aurora De Amor</h5>
-                <p>$250.000</p>
-                <button class="btn-cart">Añadir al carrito</button>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4 mb-4">
-            <div class="product-card" data-id="3" data-name="Pulsera Aurora Real" data-price="220000" data-image="img/product-3.jpg">
-              <img src="img/Pulseras/AuroraReal.png" alt="Pulsera de Lujo">
-              <div class="product-info">
-                <h5>Pulsera Aurora Real</h5>
-                <p>$220.000</p>
-                <button class="btn-cart">Añadir al carrito</button>
-              </div>
-            </div>
-          </div>
+        <div class="flex items-center gap-5">
+          <div id="account-menu"></div>
+          <a href="carrito.html" class="relative text-gold text-xl hover:scale-110 transition-transform">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-gold text-black text-xs font-bold rounded-full px-1.5 py-0.5 min-w-[18px] text-center">0</span>
+          </a>
         </div>
       </div>
     </div>
-  </div>
+  </header>
+
+  <!-- PAGE HEADER -->
+  <section class="py-16 bg-gradient-to-br from-dark to-dark-section border-b border-dark-border">
+    <div class="max-w-7xl mx-auto px-6 text-center space-y-4">
+      <h1 class="font-serif text-5xl md:text-6xl font-bold text-gold">Nuestra Tienda</h1>
+      <p class="text-lg text-gray-400">Explora nuestra colección exclusiva de joyas de lujo</p>
+    </div>
+  </section>
+
+  <!-- SHOP CONTENT -->
+  <section class="py-12">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="flex flex-col lg:flex-row gap-10">
+
+        <!-- SIDEBAR FILTERS -->
+        <aside class="lg:w-72 space-y-8">
+          <!-- Categories -->
+          <div class="bg-dark-card border border-dark-border rounded-2xl p-6 space-y-5">
+            <h3 class="font-serif text-xl font-bold text-gold flex items-center gap-3">
+              <i class="fas fa-filter"></i> Categorías
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="cat-anillos" value="anillos" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Anillos</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="cat-collares" value="collares" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Collares</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="cat-pulseras" value="pulseras" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Pulseras</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="cat-aretes" value="aretes" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Aretes</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="cat-relojes" value="relojes" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Relojes</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Price Range -->
+          <div class="bg-dark-card border border-dark-border rounded-2xl p-6 space-y-5">
+            <h3 class="font-serif text-xl font-bold text-gold flex items-center gap-3">
+              <i class="fas fa-dollar-sign"></i> Precio
+            </h3>
+            <div class="space-y-3">
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="price-0-200000" value="0-200000" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Menos de $200.000</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="price-200000-400000" value="200000-400000" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">$200.000 - $400.000</span>
+              </label>
+              <label class="flex items-center gap-3 cursor-pointer group">
+                <input type="checkbox" id="price-400000-1000000" value="400000-1000000" class="w-5 h-5 rounded border-2 border-dark-border bg-dark text-gold focus:ring-2 focus:ring-gold/50 cursor-pointer">
+                <span class="text-gray-300 group-hover:text-gold transition-colors">Más de $400.000</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Clear Filters -->
+          <button id="clear-filters" class="w-full bg-dark-card border border-dark-border text-white py-3 rounded-full font-medium hover:bg-gold hover:text-black hover:border-gold transition-all duration-300">
+            <i class="fas fa-redo mr-2"></i> Limpiar Filtros
+          </button>
+        </aside>
+
+        <!-- PRODUCTS GRID -->
+        <div class="flex-1 space-y-8">
+          <!-- Toolbar -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 bg-dark-card border border-dark-border rounded-xl p-5">
+            <p class="text-gray-400">
+              Mostrando <span id="showing-count" class="text-gold font-bold">0</span> de <span id="total-count" class="text-gold font-bold">0</span> productos
+            </p>
+            <select id="sort-select" class="bg-dark border border-dark-border text-white px-5 py-2.5 rounded-full focus:outline-none focus:border-gold transition-colors cursor-pointer">
+              <option value="name-asc">Nombre (A-Z)</option>
+              <option value="name-desc">Nombre (Z-A)</option>
+              <option value="price-asc">Precio (Menor a Mayor)</option>
+              <option value="price-desc">Precio (Mayor a Menor)</option>
+            </select>
+          </div>
+
+          <!-- Products Grid -->
+          <div id="products-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8"></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
   <!-- FOOTER -->
-  <footer class="mt-5 text-center py-4">
-    <p>&copy; 2025 <span style="color:#af9a54;">Alma de Oro</span> — Todos los derechos reservados.</p>
+  <footer class="bg-dark border-t border-dark-border py-16 mt-20">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <div class="space-y-5">
+          <h4 class="font-serif text-xl font-bold text-gold">Alma de Oro</h4>
+          <p class="text-gray-400 leading-relaxed">Creamos joyas únicas que reflejan elegancia y sofisticación.</p>
+          <div class="flex gap-4">
+            <a href="#" class="w-10 h-10 bg-dark-card border border-dark-border rounded-full flex items-center justify-center text-gold hover:bg-gold hover:text-black hover:-translate-y-1 transition-all">
+              <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-dark-card border border-dark-border rounded-full flex items-center justify-center text-gold hover:bg-gold hover:text-black hover:-translate-y-1 transition-all">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="w-10 h-10 bg-dark-card border border-dark-border rounded-full flex items-center justify-center text-gold hover:bg-gold hover:text-black hover:-translate-y-1 transition-all">
+              <i class="fab fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+        <div class="space-y-5">
+          <h4 class="font-serif text-xl font-bold text-gold">Enlaces</h4>
+          <div class="space-y-3">
+            <a href="index.html" class="block text-gray-400 hover:text-gold transition-colors">Inicio</a>
+            <a href="shop.html" class="block text-gray-400 hover:text-gold transition-colors">Tienda</a>
+          </div>
+        </div>
+        <div class="space-y-5">
+          <h4 class="font-serif text-xl font-bold text-gold">Categorías</h4>
+          <div class="space-y-3">
+            <a href="shop.html" class="block text-gray-400 hover:text-gold transition-colors">Anillos</a>
+            <a href="shop.html" class="block text-gray-400 hover:text-gold transition-colors">Collares</a>
+            <a href="shop.html" class="block text-gray-400 hover:text-gold transition-colors">Pulseras</a>
+          </div>
+        </div>
+        <div class="space-y-5">
+          <h4 class="font-serif text-xl font-bold text-gold">Contacto</h4>
+          <div class="space-y-3 text-gray-400">
+            <p><i class="fas fa-phone mr-3 text-gold"></i>+57 300 123 4567</p>
+            <p><i class="fas fa-envelope mr-3 text-gold"></i>info@almadeoro.com</p>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-dark-border text-center">
+        <p class="text-gray-400">&copy; 2025 <a href="index.html" class="text-gold hover:text-gold-light transition-colors">Alma de Oro</a>. Todos los derechos reservados.</p>
+      </div>
+    </div>
   </footer>
 
-  <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-  <script src="lib/wow/wow.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-  // === MENÚ DE USUARIO ===
-  async function setupUserMenu() {
-    const menu = document.getElementById("account-menu");
-    const token = localStorage.getItem("accessToken");
+  <script>
+    const allProducts = [
+      { id: 1, name: "Anillo Minimal", category: "anillos", price: 150000, image: "img/Anillos/Minimal.png", badge: "Nuevo" },
+      { id: 2, name: "Anillo Royal", category: "anillos", price: 180000, image: "img/Anillos/Royal.png", badge: "Popular" },
+      { id: 3, name: "Anillo Aurora Brillante", category: "anillos", price: 220000, image: "img/Anillos/AuroraBrillante.png", badge: "" },
+      { id: 4, name: "Anillo Eterna Promesa", category: "anillos", price: 280000, image: "img/Anillos/EternaPromesa.png", badge: "" },
+      { id: 5, name: "Anillo Corazón Puro", category: "anillos", price: 190000, image: "img/Anillos/CorazonPuro.png", badge: "" },
+      { id: 6, name: "Collar Minimal Glow", category: "collares", price: 210000, image: "img/Collares/MinimalGlow.png", badge: "" },
+      { id: 7, name: "Collar Brillo Infinito", category: "collares", price: 250000, image: "img/Collares/BrilloInfinto.png", badge: "Popular" },
+      { id: 8, name: "Collar Romance Puro", category: "collares", price: 290000, image: "img/Collares/RomancePuro.png", badge: "" },
+      { id: 9, name: "Collar Esencia Natural", category: "collares", price: 270000, image: "img/Collares/EsenciaNatural.png", badge: "" },
+      { id: 10, name: "Collar Aurora de Amor", category: "collares", price: 310000, image: "img/Collares/AuroraDeAmor.png", badge: "Exclusivo" },
+      { id: 11, name: "Pulsera Romance Clásico", category: "pulseras", price: 170000, image: "img/Pulseras/RomanceClasico.png", badge: "" },
+      { id: 12, name: "Pulsera Vanguardia", category: "pulseras", price: 200000, image: "img/Pulseras/Vanguardia.png", badge: "" },
+      { id: 13, name: "Pulsera Encanto Natural", category: "pulseras", price: 190000, image: "img/Pulseras/EncantoNatural.png", badge: "" },
+      { id: 14, name: "Pulsera Aurora Real", category: "pulseras", price: 240000, image: "img/Pulseras/AuroraReal.png", badge: "" },
+      { id: 15, name: "Pulsera Lujo Minimalista", category: "pulseras", price: 220000, image: "img/Pulseras/LujoMinimalista.png", badge: "Nuevo" },
+      { id: 16, name: "Aretes Brillo Estelar", category: "aretes", price: 160000, image: "img/Aretes/BrilloEstelar.png", badge: "" },
+      { id: 17, name: "Aretes Luz de Luna", category: "aretes", price: 180000, image: "img/Aretes/LuzDeLuna.png", badge: "" },
+      { id: 18, name: "Aretes Flor Dorada", category: "aretes", price: 195000, image: "img/Aretes/FlorDorada.png", badge: "Popular" },
+      { id: 19, name: "Aretes Gotas de Oro", category: "aretes", price: 210000, image: "img/Aretes/GotasDeOro.png", badge: "" },
+      { id: 20, name: "Aretes Aros Eternos", category: "aretes", price: 170000, image: "img/Aretes/ArosEternos.png", badge: "" },
+      { id: 21, name: "Reloj Deportivo Lux", category: "relojes", price: 450000, image: "img/Relojes/DeportivoLux.png", badge: "Premium" },
+      { id: 22, name: "Reloj Clásico Dorado", category: "relojes", price: 520000, image: "img/Relojes/ClasicoDorado.png", badge: "Exclusivo" },
+      { id: 23, name: "Reloj Royal Cronho", category: "relojes", price: 600000, image: "img/Relojes/RoyalCronho.png", badge: "Lujo" }
+    ];
 
-    if (!token) {
-      menu.innerHTML = `
-        <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-toggle="dropdown">
-          Mi cuenta
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="sesion.html">Iniciar sesión</a>
-          <a class="dropdown-item" href="register.html">Registrarse</a>
-        </div>`;
-      return;
+    let filteredProducts = [...allProducts];
+
+    document.addEventListener("DOMContentLoaded", () => {
+      setupUserMenu();
+      updateCartCount();
+      renderProducts(allProducts);
+      attachEventListeners();
+    });
+
+    async function setupUserMenu() {
+      const menu = document.getElementById("account-menu");
+      const token = localStorage.getItem("accessToken");
+
+      if (!token) {
+        menu.innerHTML = '<div class="relative group"><button class="text-sm font-medium uppercase tracking-wide text-white hover:text-gold transition-colors">Mi cuenta</button><div class="absolute top-full right-0 mt-3 w-48 bg-dark-card border border-dark-border rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-xl"><a href="sesion.html" class="block px-5 py-3 text-white hover:bg-gold hover:text-black transition-all hover:pl-7">Iniciar sesión</a><a href="register.html" class="block px-5 py-3 text-white hover:bg-gold hover:text-black transition-all hover:pl-7 rounded-b-lg">Registrarse</a></div></div>';
+        return;
+      }
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/api/users/me/", { headers: { Authorization: "Bearer " + token } });
+        if (!res.ok) throw new Error();
+        const user = await res.json();
+
+        menu.innerHTML = '<div class="relative group"><button class="text-sm font-medium uppercase tracking-wide text-white hover:text-gold transition-colors flex items-center gap-2"><i class="fas fa-user-circle text-lg"></i> ' + user.username + '</button><div class="absolute top-full right-0 mt-3 w-48 bg-dark-card border border-dark-border rounded-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 shadow-xl"><a href="perfil.html" class="block px-5 py-3 text-white hover:bg-gold hover:text-black transition-all hover:pl-7">Mi perfil</a><a href="#" id="logout" class="block px-5 py-3 text-white hover:bg-gold hover:text-black transition-all hover:pl-7 rounded-b-lg">Cerrar sesión</a></div></div>';
+
+        document.getElementById("logout").addEventListener("click", (e) => {
+          e.preventDefault();
+          Swal.fire({ icon: "question", title: "¿Cerrar sesión?", showCancelButton: true, confirmButtonText: "Sí, salir", background: "#0a0a0a", color: "#fff", confirmButtonColor: "#d4af37" }).then((r) => {
+            if (r.isConfirmed) { localStorage.removeItem("accessToken"); localStorage.removeItem("refreshToken"); window.location.href = "index.html"; }
+          });
+        });
+      } catch { localStorage.removeItem("accessToken"); localStorage.removeItem("refreshToken"); }
     }
 
-    try {
-      const res = await fetch("http://127.0.0.1:8000/api/users/me/", {
-        headers: { Authorization: "Bearer " + token },
-      });
-      if (!res.ok) throw new Error("Token inválido");
-      const user = await res.json();
+    function getCart() { try { return JSON.parse(localStorage.getItem("cart")) || []; } catch { return []; } }
+    function setCart(cart) { localStorage.setItem("cart", JSON.stringify(cart)); }
+    function updateCartCount() { const cart = getCart(); const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0); document.getElementById("cart-count").textContent = total; }
 
-      menu.innerHTML = `
-        <button class="btn btn-sm btn-light dropdown-toggle" type="button" data-toggle="dropdown">
-          <i class="fas fa-user-circle"></i> ${user.username}
-        </button>
-        <div class="dropdown-menu dropdown-menu-right">
-          <a class="dropdown-item" href="perfil.html">Mi perfil</a>
-          <a class="dropdown-item text-danger" href="#" id="logout">Cerrar sesión</a>
-        </div>`;
+    function addToCart(item) {
+      const cart = getCart();
+      const found = cart.find(p => p.id == item.id);
+      if (found) found.quantity = (found.quantity || 1) + 1;
+      else cart.push({ ...item, quantity: 1 });
+      setCart(cart);
+      updateCartCount();
+      Swal.fire({ icon: "success", title: "¡Producto agregado!", text: item.name + " se añadió al carrito.", background: "#0a0a0a", color: "#fff", confirmButtonColor: "#d4af37", timer: 2000, showConfirmButton: false });
+    }
 
-      document.getElementById("logout").addEventListener("click", (e) => {
-        e.preventDefault();
-        Swal.fire({
-          icon: "question",
-          title: "¿Cerrar sesión?",
-          showCancelButton: true,
-          confirmButtonText: "Sí, salir",
-          cancelButtonText: "Cancelar",
-          background: "#111",
-          color: "#fff",
-          confirmButtonColor: "#d4af37",
-        }).then((r) => {
-          if (r.isConfirmed) {
-            localStorage.removeItem("accessToken");
-            localStorage.removeItem("refreshToken");
-            window.location.href = "index.html";
-          }
+    function renderProducts(products) {
+      const grid = document.getElementById("products-grid");
+      const showingCount = document.getElementById("showing-count");
+      const totalCount = document.getElementById("total-count");
+
+      if (products.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-20"><i class="fas fa-search text-6xl text-gold/30 mb-5"></i><p class="text-gray-400 text-xl">No se encontraron productos</p></div>';
+        showingCount.textContent = 0;
+        totalCount.textContent = allProducts.length;
+        return;
+      }
+
+      grid.innerHTML = products.map(p => {
+        const badgeHTML = p.badge ? '<span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">' + p.badge + '</span>' : '';
+        return '<article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500" data-id="' + p.id + '" data-name="' + p.name + '" data-price="' + p.price + '" data-image="' + p.image + '"><a href="detail.html?id=' + p.id + '" class="block"><div class="relative h-80 overflow-hidden bg-dark-section cursor-pointer"><img src="' + p.image + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">' + badgeHTML + '</div></a><div class="p-6 space-y-4"><p class="text-xs uppercase tracking-wide text-gold font-medium">' + p.category + '</p><h5 class="font-serif text-xl font-bold text-white">' + p.name + '</h5><p class="text-2xl font-bold text-gold">$' + p.price.toLocaleString('es-CO') + '</p><button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">Añadir al Carrito</button></div></article>';
+      }).join('');
+
+      showingCount.textContent = products.length;
+      totalCount.textContent = allProducts.length;
+
+      document.querySelectorAll(".btn-cart").forEach(btn => {
+        btn.addEventListener("click", function () {
+          const card = this.closest(".product-card");
+          addToCart({ id: card.dataset.id, name: card.dataset.name, price: parseFloat(card.dataset.price), image: card.dataset.image });
         });
       });
-    } catch {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
     }
-  }
 
-  // === CARRITO ===
-  function getCart() {
-    try {
-      return JSON.parse(localStorage.getItem("cart")) || [];
-    } catch {
-      return [];
-    }
-  }
+    function applyFilters() {
+      const categoryFilters = Array.from(document.querySelectorAll('input[id^="cat-"]:checked')).map(cb => cb.value);
+      const priceFilters = Array.from(document.querySelectorAll('input[id^="price-"]:checked')).map(cb => cb.value);
 
-  function setCart(c) {
-    localStorage.setItem("cart", JSON.stringify(c));
-  }
-
-  function updateCartCount() {
-    const cart = getCart();
-    const count = cart.reduce((a, b) => a + (b.quantity || 1), 0);
-    const el = document.getElementById("cart-count");
-    if (el) el.textContent = count;
-  }
-
-  function addToCart(item) {
-    const cart = getCart();
-    const found = cart.find((p) => p.id == item.id);
-    if (found) {
-      found.quantity = (found.quantity || 1) + 1;
-    } else {
-      cart.push({ ...item, quantity: 1 });
-    }
-    setCart(cart);
-    updateCartCount();
-
-    Swal.fire({
-      icon: "success",
-      title: "Producto agregado",
-      text: item.name + " se añadió al carrito.",
-      background: "#111",
-      color: "#fff",
-      confirmButtonColor: "#d4af37",
-    });
-  }
-
-  // === INICIALIZAR ===
-  document.addEventListener("DOMContentLoaded", () => {
-    setupUserMenu();
-    updateCartCount();
-
-    // 🔹 Importante: Reasignar eventos después de que todo cargue
-    document.querySelectorAll(".btn-cart").forEach((btn) => {
-      btn.addEventListener("click", function () {
-        const card = this.closest(".product-card, .card");
-        if (!card) return;
-        addToCart({
-          id: card.dataset.id,
-          name: card.dataset.name,
-          price: parseFloat(card.dataset.price),
-          image: card.dataset.image,
-        });
+      filteredProducts = allProducts.filter(product => {
+        const categoryMatch = categoryFilters.length === 0 || categoryFilters.includes(product.category);
+        let priceMatch = priceFilters.length === 0;
+        if (!priceMatch) {
+          priceMatch = priceFilters.some(range => {
+            const [min, max] = range.split('-').map(Number);
+            return product.price >= min && (max ? product.price <= max : true);
+          });
+        }
+        return categoryMatch && priceMatch;
       });
-    });
-  });
-</script>
+
+      applySorting();
+    }
+
+    function applySorting() {
+      const sortValue = document.getElementById("sort-select").value;
+      if (sortValue === "name-asc") filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+      else if (sortValue === "name-desc") filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+      else if (sortValue === "price-asc") filteredProducts.sort((a, b) => a.price - b.price);
+      else if (sortValue === "price-desc") filteredProducts.sort((a, b) => b.price - a.price);
+      renderProducts(filteredProducts);
+    }
+
+    function attachEventListeners() {
+      document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener("change", applyFilters));
+      document.getElementById("sort-select").addEventListener("change", applySorting);
+      document.getElementById("clear-filters").addEventListener("click", () => {
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
+        filteredProducts = [...allProducts];
+        applySorting();
+      });
+    }
+  </script>
 
 </body>
 </html>
-
-
-
-
