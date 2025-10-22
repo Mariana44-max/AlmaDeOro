@@ -32,7 +32,7 @@ Sigue estos pasos para clonar el proyecto y hacer que la API funcione en tu equi
 
 ### 1. Clonar el repositorio
 
-```bash
+```powershell
 git clone https://github.com/tu-usuario/alma-de-oro.git
 cd alma-de-oro
 ```
@@ -41,52 +41,40 @@ cd alma-de-oro
 
 En **Windows**:
 
-```bash
+```powershell
 python -m venv .venv
 .venv\Scripts\activate
 ```
 
 En **Linux/Mac**:
 
-```bash
+```powershell
 python3 -m venv .venv
 source .venv/bin/activate
 ```
 
 ### 3. Instalar dependencias
 
-```bash
+```powershell
 pip install -r requirements.txt
 ```
 
-### 4. Configurar variables de entorno
+### 4. Aplicar migraciones
 
-Crea un archivo `.env` en la raíz del proyecto y define las variables necesarias:
-
-```ini
-DEBUG=True
-SECRET_KEY=tu_clave_secreta
-DATABASE_URL=sqlite:///db.sqlite3
-```
-
-*(puedes usar SQLite para pruebas locales, no requiere configuración adicional)*
-
-### 5. Aplicar migraciones
-
-```bash
+```powershell
 python manage.py makemigrations
 python manage.py migrate
 ```
 
-### 6. Crear superusuario
+### 5. Crear superusuario
 
-```bash
+```powershell
 python manage.py createsuperuser
 ```
 
-### 7. Ejecutar el servidor
+### 6. Ejecutar el servidor
 
-```bash
+```powershell
 python manage.py runserver
 ```
 
