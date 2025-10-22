@@ -1,375 +1,214 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mi Perfil - Alma de Oro</title>
+  <title>Mi Perfil | Alma de Oro</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Estilos base -->
+  <link rel="stylesheet" href="css/stylelogin.css" />
+
+  <!-- Librería de alertas modernas -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            gold: { DEFAULT: '#d4af37', light: '#f4d03f', dark: '#b8962e' },
-            dark: { DEFAULT: '#0a0a0a', card: '#151515', section: '#1a1a1a', border: '#2a2a2a' }
-          },
-          fontFamily: {
-            serif: ['Playfair Display', 'serif'],
-            sans: ['Roboto', 'sans-serif']
-          }
-        }
-      }
+  <style>
+    /* === Botón Cerrar Sesión elegante === */
+    .logout-button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background-color: #e74c3c;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 25px;
+      font-weight: 600;
     }
-  </script>
 
-  <style type="text/tailwindcss">
-    @layer utilities {
-      .bg-pattern {
-        background-image: radial-gradient(circle, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-        background-size: 50px 50px;
-      }
+    .logout-button:hover {
+      background-color: #c0392b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(192, 57, 43, 0.4);
+    }
 
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-      }
+    /* === Botones dorados para estilo "Alma de Oro" === */
+    .login-button {
+      background-color: #d4af37;
+      border: none;
+      color: white;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
 
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
+    .login-button:hover {
+      background-color: #b7950b;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(212, 175, 55, 0.4);
     }
   </style>
 </head>
 
-<body class="bg-dark font-sans text-white min-h-screen flex items-center justify-center p-6 bg-pattern relative overflow-y-auto">
-  <a href="index.html" class="absolute top-6 left-6 z-10 flex items-center gap-2 text-gray-400 hover:text-gold transition-colors group">
-    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-    <span>Volver al inicio</span>
-  </a>
+<body>
+  <div class="container">
+    <div class="heading">Mi Perfil</div>
 
-  <div class="w-full max-w-4xl relative z-10">
-    <div class="bg-dark-card border border-dark-border rounded-3xl shadow-2xl p-8 lg:p-12 backdrop-blur-sm space-y-12">
-      <div class="text-center space-y-3">
-        <div class="inline-block p-4 bg-gradient-to-br from-gold/20 to-gold/5 rounded-2xl mb-2 animate-float">
-          <i class="fas fa-user-shield text-4xl text-gold"></i>
-        </div>
-        <h1 class="font-serif text-3xl font-bold">
-          <span class="text-gold">Alma</span><span class="text-white font-light"> de </span><span class="text-gold">Oro</span>
-        </h1>
-        <p class="text-gray-400">Administra tu información y mantén tu cuenta segura</p>
-      </div>
+    <!-- ✅ Formulario de perfil -->
+    <form id="profile-form" class="form">
+      <input id="username" type="text" placeholder="Nombre de usuario" class="input" required />
+      <input id="email" type="email" placeholder="Correo electrónico" class="input" required />
+      <button type="submit" class="login-button">Actualizar Perfil</button>
+    </form>
 
-      <div class="grid gap-12 lg:grid-cols-2">
-        <form id="profile-form" class="space-y-6">
-          <div class="flex items-center gap-3 text-gold font-semibold uppercase tracking-wide text-sm">
-            <i class="fas fa-id-card"></i>
-            <span>Datos personales</span>
-          </div>
+    <!-- ✅ Formulario de cambio de contraseña -->
+    <form id="password-form" class="form" style="margin-top: 30px;">
+      <div class="heading">Cambiar Contraseña</div>
+      <input id="old-password" type="password" placeholder="Contraseña actual" class="input" required />
+      <input id="new-password" type="password" placeholder="Nueva contraseña" class="input" required />
+      <input id="confirm-password" type="password" placeholder="Confirmar nueva contraseña" class="input" required />
+      <button type="submit" class="login-button">Actualizar Contraseña</button>
+    </form>
 
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <label for="username" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Nombre de usuario</label>
-              <div class="relative">
-                <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input id="username" type="text" placeholder="Nombre de usuario" required autocomplete="username"
-                  class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <label for="email" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Correo electrónico</label>
-              <div class="relative">
-                <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input id="email" type="email" placeholder="tu@email.com" required autocomplete="email"
-                  class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
-              </div>
-            </div>
-          </div>
-
-          <button type="submit"
-            class="btn-profile w-full bg-gold text-black py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300 relative overflow-hidden group">
-            <span class="relative z-10">Actualizar perfil</span>
-            <div class="absolute inset-0 bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-        </form>
-
-        <form id="password-form" class="space-y-6">
-          <div class="flex items-center gap-3 text-gold font-semibold uppercase tracking-wide text-sm">
-            <i class="fas fa-lock"></i>
-            <span>Seguridad</span>
-          </div>
-
-          <div class="space-y-4">
-            <div class="space-y-2">
-              <label for="old-password" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Contraseña actual</label>
-              <div class="relative">
-                <i class="fas fa-key absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input id="old-password" type="password" placeholder="Contraseña actual" required autocomplete="current-password"
-                  class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <label for="new-password" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Nueva contraseña</label>
-              <div class="relative">
-                <i class="fas fa-lock-open absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input id="new-password" type="password" placeholder="Nueva contraseña" required autocomplete="new-password"
-                  class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
-              </div>
-            </div>
-
-            <div class="space-y-2">
-              <label for="confirm-password" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Confirmar contraseña</label>
-              <div class="relative">
-                <i class="fas fa-shield-alt absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-                <input id="confirm-password" type="password" placeholder="Repite la nueva contraseña" required autocomplete="new-password"
-                  class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
-              </div>
-            </div>
-          </div>
-
-          <button type="submit"
-            class="btn-password w-full bg-gold text-black py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300 relative overflow-hidden group">
-            <span class="relative z-10">Actualizar contraseña</span>
-            <div class="absolute inset-0 bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </button>
-        </form>
-      </div>
-
-      <div class="border-t border-dark-border pt-10">
-        <button id="logout-btn"
-          class="w-full bg-red-500 hover:bg-red-600 text-white py-4 rounded-full font-bold text-sm uppercase tracking-wide transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-red-500/40">
-          Cerrar sesión
-        </button>
-      </div>
-    </div>
-
-    <div class="absolute -top-20 -left-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
-    <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
+    <!-- ✅ Botón de cerrar sesión -->
+    <button id="logout-btn" class="logout-button">Cerrar sesión</button>
   </div>
 
+  <!-- ✅ Script funcional -->
   <script>
-    const showAlert = (options) => {
-      const baseOptions = {
-        background: '#0a0a0a',
-        color: '#fff',
-        confirmButtonColor: '#d4af37'
-      };
-      return Swal.fire({ ...baseOptions, ...options });
-    };
-
-    const toggleButtonState = (button, isLoading, loadingLabel) => {
-      if (!button) return;
-      const label = button.querySelector('span');
-      if (!label) return;
-
-      if (isLoading) {
-        button.disabled = true;
-        button.classList.add('opacity-70', 'cursor-not-allowed');
-        button.dataset.originalLabel = label.textContent;
-        label.innerHTML = `<i class="fas fa-spinner fa-spin mr-2"></i>${loadingLabel}`;
-      } else {
-        button.disabled = false;
-        button.classList.remove('opacity-70', 'cursor-not-allowed');
-        label.textContent = button.dataset.originalLabel || label.textContent;
-      }
-    };
-
-    document.addEventListener('DOMContentLoaded', async () => {
-      const token = localStorage.getItem('accessToken');
-
+    document.addEventListener("DOMContentLoaded", async () => {
+      const token = localStorage.getItem("accessToken");
       if (!token) {
-        showAlert({
-          icon: 'warning',
-          title: 'Sesión expirada',
-          text: 'Por favor, inicia sesión nuevamente.'
-        }).then(() => { window.location.href = 'sesion.html'; });
+        Swal.fire({
+          icon: "warning",
+          title: "Sesión expirada",
+          text: "Por favor, inicia sesión nuevamente.",
+          confirmButtonColor: "#d4af37",
+        }).then(() => (window.location.href = "sesion.html"));
         return;
       }
 
-      const profileForm = document.getElementById('profile-form');
-      const passwordForm = document.getElementById('password-form');
-      const logoutBtn = document.getElementById('logout-btn');
+      // === Cargar datos del usuario ===
+      const response = await fetch("http://127.0.0.1:8000/api/users/me/", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const user = await response.json();
+      document.getElementById("username").value = user.username;
+      document.getElementById("email").value = user.email;
 
-      try {
-        const response = await fetch('http://127.0.0.1:8000/api/users/me/', {
-          headers: { Authorization: `Bearer ${token}` }
+      // === Actualizar perfil ===
+      document.getElementById("profile-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+          username: document.getElementById("username").value,
+          email: document.getElementById("email").value,
+        };
+
+        const res = await fetch("http://127.0.0.1:8000/api/users/me/", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(data),
         });
 
-        if (!response.ok) {
-          throw new Error('No se pudo cargar la información del perfil.');
-        }
-
-        const user = await response.json();
-        document.getElementById('username').value = user.username || '';
-        document.getElementById('email').value = user.email || '';
-      } catch (error) {
-        showAlert({
-          icon: 'error',
-          title: 'Error',
-          text: error.message || 'No se pudo cargar la información del perfil.'
-        });
-      }
-
-      profileForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const button = event.currentTarget.querySelector('.btn-profile');
-        toggleButtonState(button, true, 'Guardando...');
-
-        try {
-          const response = await fetch('http://127.0.0.1:8000/api/users/me/', {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
-            },
-            body: JSON.stringify({
-              username: document.getElementById('username').value.trim(),
-              email: document.getElementById('email').value.trim()
-            })
+        if (res.ok) {
+          Swal.fire({
+            icon: "success",
+            title: "Perfil actualizado",
+            text: "Tu información se guardó correctamente.",
+            confirmButtonColor: "#27ae60",
           });
-
-          if (!response.ok) {
-            const errorData = await response.json().catch(() => ({}));
-            throw new Error(errorData.detail || 'No se pudo actualizar el perfil.');
-          }
-
-          showAlert({
-            icon: 'success',
-            title: 'Perfil actualizado',
-            text: 'Tu información se guardó correctamente.',
-            confirmButtonColor: '#27ae60'
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "No se pudo actualizar el perfil.",
+            confirmButtonColor: "#d4af37",
           });
-        } catch (error) {
-          showAlert({
-            icon: 'error',
-            title: 'Error',
-            text: error.message || 'No se pudo actualizar el perfil.'
-          });
-        } finally {
-          toggleButtonState(button, false);
         }
       });
 
-      passwordForm.addEventListener('submit', async (event) => {
-        event.preventDefault();
+      // === Cambiar contraseña ===
+      document.getElementById("password-form").addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-        const newPassword = document.getElementById('new-password').value.trim();
-        const confirmPassword = document.getElementById('confirm-password').value.trim();
+        const old_password = document.getElementById("old-password").value.trim();
+        const new_password = document.getElementById("new-password").value.trim();
+        const confirm = document.getElementById("confirm-password").value.trim();
 
-        if (newPassword !== confirmPassword) {
-          showAlert({
-            icon: 'error',
-            title: 'Contraseñas no coinciden',
-            text: 'Por favor verifica los campos.'
+        if (new_password !== confirm) {
+          Swal.fire({
+            icon: "error",
+            title: "Contraseñas no coinciden",
+            text: "Por favor verifica los campos.",
+            confirmButtonColor: "#d4af37",
           });
           return;
         }
 
-        const button = event.currentTarget.querySelector('.btn-password');
-        toggleButtonState(button, true, 'Actualizando...');
-
         try {
-          const response = await fetch('http://127.0.0.1:8000/api/users/me/change-password/', {
-            method: 'POST',
+          const res = await fetch("http://127.0.0.1:8000/api/users/me/change-password/", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
             },
-            body: JSON.stringify({
-              old_password: document.getElementById('old-password').value.trim(),
-              new_password: newPassword
-            })
+            body: JSON.stringify({ old_password, new_password }),
           });
 
-          const data = await response.json().catch(() => ({}));
+          const data = await res.json();
 
-          if (!response.ok) {
-            throw new Error(data.message || data.detail || 'Verifica tus datos e inténtalo nuevamente.');
+          if (res.ok) {
+            Swal.fire({
+              icon: "success",
+              title: "Contraseña actualizada",
+              text: "Tu contraseña se cambió correctamente.",
+              confirmButtonColor: "#27ae60",
+            });
+            document.getElementById("password-form").reset();
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Error al cambiar contraseña",
+              text: data.message || "Verifica tus datos e inténtalo nuevamente.",
+              confirmButtonColor: "#d4af37",
+            });
           }
-
-          showAlert({
-            icon: 'success',
-            title: 'Contraseña actualizada',
-            text: 'Tu contraseña se cambió correctamente.',
-            confirmButtonColor: '#27ae60'
-          });
-          passwordForm.reset();
         } catch (error) {
-          showAlert({
-            icon: 'error',
-            title: 'Error al cambiar contraseña',
-            text: error.message || 'Verifica tus datos e inténtalo nuevamente.'
+          Swal.fire({
+            icon: "error",
+            title: "Error de conexión",
+            text: "No se pudo conectar al servidor.",
+            confirmButtonColor: "#d4af37",
           });
-        } finally {
-          toggleButtonState(button, false);
         }
       });
 
-      if (logoutBtn) {
-        const cerrarSesion = async () => {
-          const refreshToken = localStorage.getItem('refreshToken');
-
-          try {
-            if (refreshToken) {
-              const response = await fetch('http://127.0.0.1:8000/api/users/logout/', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${token}`
-                },
-                body: JSON.stringify({ refresh: refreshToken })
-              });
-
-              if (!response.ok) {
-                const errorData = await response.json().catch(() => ({}));
-                throw new Error(errorData.error || errorData.detail || 'No se pudo cerrar la sesión en el servidor.');
-              }
-            }
-          } catch (error) {
-            console.warn('No se pudo invalidar la sesión en el servidor:', error);
-          } finally {
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-
-            await showAlert({
-              icon: 'success',
-              title: 'Sesión cerrada',
-              text: 'Serás redirigido al inicio.',
-              showConfirmButton: false,
-              timer: 1200
-            });
-
-            window.location.replace('index.html');
+      // === Cerrar sesión ===
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        Swal.fire({
+          icon: "question",
+          title: "¿Cerrar sesión?",
+          showCancelButton: true,
+          confirmButtonText: "Sí, salir",
+          cancelButtonText: "Cancelar",
+          confirmButtonColor: "#e74c3c",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            localStorage.removeItem("accessToken");
+            localStorage.removeItem("refreshToken");
+            Swal.fire({
+              icon: "success",
+              title: "Sesión cerrada",
+              text: "Vuelve pronto ✨",
+              confirmButtonColor: "#d4af37",
+            }).then(() => (window.location.href = "index.html"));
           }
-        };
-
-        logoutBtn.addEventListener('click', () => {
-          Swal.fire({
-            icon: 'question',
-            title: '¿Cerrar sesión?',
-            text: 'Tu sesión se cerrará en este dispositivo.',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, salir',
-            cancelButtonText: 'Cancelar',
-            background: '#0a0a0a',
-            color: '#fff',
-            confirmButtonColor: '#e74c3c',
-            cancelButtonColor: '#555'
-          }).then((result) => {
-            if (!result.isConfirmed) return;
-
-            cerrarSesion();
-          });
         });
-      }
+      });
     });
   </script>
 </body>
 </html>
-

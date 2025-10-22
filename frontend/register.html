@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,14 +8,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/cart-utils.js"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            gold: { DEFAULT: '#d4af37', light: '#f4d03f', dark: '#b8962e' },
-            dark: { DEFAULT: '#0a0a0a', card: '#151515', section: '#1a1a1a', border: '#2a2a2a' }
-          },
+          colors: { gold: { DEFAULT: '#d4af37', light: '#f4d03f', dark: '#b8962e' }, dark: { DEFAULT: '#0a0a0a', card: '#151515', section: '#1a1a1a', border: '#2a2a2a' } },
           fontFamily: { serif: ['Playfair Display', 'serif'], sans: ['Roboto', 'sans-serif'] }
         }
       }
@@ -23,151 +21,72 @@
   </script>
   <style type="text/tailwindcss">
     @layer utilities {
-      .bg-pattern {
-        background-image: radial-gradient(circle, rgba(212, 175, 55, 0.03) 1px, transparent 1px);
-        background-size: 50px 50px;
-      }
-      @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-20px); }
-      }
+      .bg-pattern { background-image: radial-gradient(circle, rgba(212, 175, 55, 0.03) 1px, transparent 1px); background-size: 50px 50px; }
+      @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
       .animate-float { animation: float 6s ease-in-out infinite; }
     }
   </style>
 </head>
-
-<body class="bg-dark font-sans text-white min-h-screen flex items-center justify-center p-6 bg-pattern relative overflow-y-auto">
+<body class="bg-dark font-sans text-white min-h-screen flex items-center justify-center p-6 bg-pattern relative overflow-hidden">
   <a href="index.html" class="absolute top-6 left-6 z-10 flex items-center gap-2 text-gray-400 hover:text-gold transition-colors group">
-    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
-    <span>Volver al inicio</span>
+    <i class="fas fa-arrow-left group-hover:-translate-x-1 transition-transform"></i><span>Volver al inicio</span>
   </a>
-
-  <button id="logout-btn" type="button" class="absolute top-6 right-6 z-10 hidden items-center gap-2 text-gray-400 hover:text-gold transition-colors group">
-    <span>Cerrar sesión</span>
-    <i class="fas fa-right-from-bracket group-hover:translate-x-1 transition-transform"></i>
-  </button>
-
   <div class="w-full max-w-md relative z-10">
     <div class="bg-dark-card border border-dark-border rounded-3xl shadow-2xl p-10 backdrop-blur-sm">
       <div class="text-center mb-10 space-y-3">
         <div class="inline-block p-4 bg-gradient-to-br from-gold/20 to-gold/5 rounded-2xl mb-4 animate-float">
           <i class="fas fa-crown text-4xl text-gold"></i>
         </div>
-        <h1 class="font-serif text-3xl font-bold">
-          <span class="text-gold">Alma</span><span class="text-white font-light"> de </span><span class="text-gold">Oro</span>
-        </h1>
+        <h1 class="font-serif text-3xl font-bold"><span class="text-gold">Alma</span><span class="text-white font-light"> de </span><span class="text-gold">Oro</span></h1>
         <p class="text-gray-400">Crea tu cuenta y empieza a comprar</p>
       </div>
-
       <form id="register-form" class="space-y-6">
         <div class="space-y-2">
           <label for="name" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Nombre Completo</label>
           <div class="relative">
             <i class="fas fa-user absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-            <input type="text" id="name" name="name" placeholder="Tu nombre completo" required autocomplete="name"
-              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+            <input type="text" id="name" name="name" placeholder="Tu nombre completo" required autocomplete="name" class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
           </div>
         </div>
-
         <div class="space-y-2">
           <label for="email" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Correo Electrónico</label>
           <div class="relative">
             <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-            <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email"
-              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+            <input type="email" id="email" name="email" placeholder="tu@email.com" required autocomplete="email" class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
           </div>
           <div id="email-error" class="text-red-400 text-sm mt-1 hidden"></div>
         </div>
-
         <div class="space-y-2">
           <label for="password" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Contraseña</label>
           <div class="relative">
             <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-            <input type="password" id="password" name="password" placeholder="Crea una contraseña segura" required autocomplete="new-password"
-              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+            <input type="password" id="password" name="password" placeholder="Mínimo 8 caracteres" required autocomplete="new-password" class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
           </div>
-          <div class="h-1 bg-dark-border rounded-full overflow-hidden mt-2">
-            <div id="strength-fill" class="h-full w-0 transition-all duration-300"></div>
-          </div>
+          <div class="h-1 bg-dark-border rounded-full overflow-hidden mt-2"><div id="strength-fill" class="h-full w-0 transition-all duration-300"></div></div>
           <div id="strength-text" class="text-xs text-gray-400 mt-1"></div>
         </div>
-
         <div class="space-y-2">
           <label for="confirm" class="block text-sm font-medium text-gray-400 uppercase tracking-wider">Confirmar Contraseña</label>
           <div class="relative">
             <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-500"></i>
-            <input type="password" id="confirm" name="confirm" placeholder="Repite tu contraseña" required autocomplete="new-password"
-              class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
+            <input type="password" id="confirm" name="confirm" placeholder="Repite tu contraseña" required autocomplete="new-password" class="w-full pl-12 pr-4 py-4 bg-dark border border-dark-border rounded-xl text-white placeholder-gray-600 focus:outline-none focus:border-gold focus:ring-2 focus:ring-gold/20 transition-all">
           </div>
           <div id="confirm-error" class="text-red-400 text-sm mt-1 hidden"></div>
         </div>
-
-        <button type="submit"
-          class="btn-register w-full bg-gold text-black py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300 relative overflow-hidden group">
-          <span class="relative z-10">Crear Cuenta</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <button type="submit" class="btn-register w-full bg-gold text-black py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300 relative overflow-hidden group">
+          <span class="relative z-10">Crear Cuenta</span><div class="absolute inset-0 bg-gradient-to-r from-gold-light to-gold opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
         </button>
       </form>
-
       <div class="relative my-8">
-        <div class="absolute inset-0 flex items-center">
-          <div class="w-full border-t border-dark-border"></div>
-        </div>
-        <div class="relative flex justify-center text-sm">
-          <span class="px-4 bg-dark-card text-gray-500 uppercase tracking-wide">¿Ya tienes cuenta?</span>
-        </div>
+        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-dark-border"></div></div>
+        <div class="relative flex justify-center text-sm"><span class="px-4 bg-dark-card text-gray-500 uppercase tracking-wide">¿Ya tienes cuenta?</span></div>
       </div>
-      <div class="text-center">
-        <a href="sesion.html" class="inline-block text-gold hover:text-gold-light font-semibold transition-colors">
-          Inicia sesión aquí →
-        </a>
-      </div>
+      <div class="text-center"><a href="sesion.html" class="inline-block text-gold hover:text-gold-light font-semibold transition-colors">Inicia sesión aquí →</a></div>
     </div>
-
     <div class="absolute -top-20 -left-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
     <div class="absolute -bottom-20 -right-20 w-40 h-40 bg-gold/10 rounded-full blur-3xl"></div>
   </div>
-
   <script>
-    const logoutBtn = document.getElementById('logout-btn');
-    const tieneSesion = Boolean(localStorage.getItem('accessToken'));
-
-    if (logoutBtn) {
-      if (!tieneSesion) {
-        logoutBtn.remove();
-      } else {
-        logoutBtn.classList.remove('hidden');
-        logoutBtn.addEventListener('click', (event) => {
-          event.preventDefault();
-          Swal.fire({
-            icon: 'question',
-            title: '¿Cerrar sesión?',
-            text: 'Tu sesión actual se cerrará y volverás al inicio.',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, salir',
-            cancelButtonText: 'Cancelar',
-            background: '#0a0a0a',
-            color: '#fff',
-            confirmButtonColor: '#d4af37'
-          }).then((resultado) => {
-            if (!resultado.isConfirmed) return;
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            Swal.fire({
-              icon: 'success',
-              title: 'Sesión cerrada',
-              text: 'Has cerrado sesión correctamente.',
-              background: '#0a0a0a',
-              color: '#fff',
-              confirmButtonColor: '#d4af37'
-            }).then(() => {
-              window.location.href = 'index.html';
-            });
-          });
-        });
-      }
-    }
-
     const passwordInput = document.getElementById('password');
     const strengthFill = document.getElementById('strength-fill');
     const strengthText = document.getElementById('strength-text');
@@ -184,7 +103,6 @@
       else if (strength === 3) { strengthFill.classList.add('w-2/3', 'bg-yellow-500'); strengthText.textContent = 'Contraseña media'; strengthText.className = 'text-xs text-yellow-400 mt-1'; }
       else { strengthFill.classList.add('w-full', 'bg-green-500'); strengthText.textContent = 'Contraseña fuerte'; strengthText.className = 'text-xs text-green-400 mt-1'; }
     });
-
     document.getElementById("register-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value.trim();
@@ -195,83 +113,29 @@
       const btnText = btn.querySelector('span');
       const emailError = document.getElementById('email-error');
       const confirmError = document.getElementById('confirm-error');
-
       emailError.classList.add('hidden');
       confirmError.classList.add('hidden');
-
-      if (password !== confirm) {
-        confirmError.textContent = 'Las contraseñas no coinciden';
-        confirmError.classList.remove('hidden');
-        return;
-      }
-
-      if (password.length < 8) {
-        Swal.fire({
-          icon: "warning",
-          title: "Contraseña muy corta",
-          text: "La contraseña debe tener al menos 8 caracteres",
-          background: "#0a0a0a",
-          color: "#fff",
-          confirmButtonColor: "#d4af37"
-        });
-        return;
-      }
-
+      if (password !== confirm) { confirmError.textContent = 'Las contraseñas no coinciden'; confirmError.classList.remove('hidden'); return; }
+      if (password.length < 8) { Swal.fire({ icon: "warning", title: "Contraseña muy corta", text: "La contraseña debe tener al menos 8 caracteres", background: "#0a0a0a", color: "#fff", confirmButtonColor: "#d4af37" }); return; }
       btn.disabled = true;
       btn.classList.add('opacity-70');
       btnText.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Creando cuenta...';
-
       try {
-        const response = await fetch("http://127.0.0.1:8000/api/users/register/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            full_name: name,
-            email: email,
-            username: email.split("@")[0],
-            password: password,
-            password2: confirm
-          })
-        });
-
+        const response = await fetch("http://127.0.0.1:8000/api/users/register/", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ full_name: name, email: email, username: email.split("@")[0], password: password, password2: confirm }) });
         const data = await response.json();
-        if (!response.ok) {
-          if (data.email) {
-            emailError.textContent = data.email[0];
-            emailError.classList.remove('hidden');
-          }
-          throw new Error(data.detail || "Error al crear la cuenta");
-        }
-
+        if (!response.ok) { if (data.email) { emailError.textContent = data.email[0]; emailError.classList.remove('hidden'); } throw new Error(data.detail || "Error al crear la cuenta"); }
         localStorage.setItem("accessToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
-        await Swal.fire({
-          icon: "success",
-          title: "¡Cuenta creada!",
-          text: "Tu cuenta ha sido creada exitosamente",
-          background: "#0a0a0a",
-          color: "#fff",
-          confirmButtonColor: "#d4af37",
-          timer: 1500,
-          showConfirmButton: false
-        });
-        window.location.replace('index.html');
+        // 🔄 Migrar carrito anónimo
+        CartUtils.migrateAnonymousCart();
+        Swal.fire({ icon: "success", title: "¡Cuenta creada!", text: "Tu cuenta ha sido creada exitosamente", background: "#0a0a0a", color: "#fff", confirmButtonColor: "#d4af37", timer: 2000, showConfirmButton: false }).then(() => { window.location.href = "index.html"; });
       } catch (error) {
         btn.disabled = false;
         btn.classList.remove('opacity-70');
         btnText.textContent = 'Crear Cuenta';
-        Swal.fire({
-          icon: "error",
-          title: "Error al registrar",
-          text: error.message || "Ocurrió un error al crear tu cuenta",
-          background: "#0a0a0a",
-          color: "#fff",
-          confirmButtonColor: "#d4af37"
-        });
+        Swal.fire({ icon: "error", title: "Error al registrar", text: error.message || "Ocurrió un error al crear tu cuenta", background: "#0a0a0a", color: "#fff", confirmButtonColor: "#d4af37" });
       }
     });
   </script>
 </body>
 </html>
-
-

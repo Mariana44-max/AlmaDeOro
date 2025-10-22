@@ -17,6 +17,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <script src="js/cart-utils.js"></script>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -211,7 +212,7 @@
         </a>
 
         <a href="shop.html" class="group relative h-72 rounded-2xl overflow-hidden hover:-translate-y-3 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-gold/30">
-          <img src="img/Aretes/Mariposa.png" alt="Aretes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <img src="img/Aretes/BrilloEstelar.png" alt="Aretes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
           <div class="absolute bottom-0 left-0 right-0 p-6">
             <h3 class="font-serif text-2xl font-bold text-gold">Aretes</h3>
@@ -219,7 +220,7 @@
         </a>
 
         <a href="shop.html" class="group relative h-72 rounded-2xl overflow-hidden hover:-translate-y-3 transition-all duration-500 shadow-lg hover:shadow-2xl hover:shadow-gold/30">
-          <img src="img/Relojes/Oro.png" alt="Relojes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+          <img src="img/Relojes/ClasicoDorado.png" alt="Relojes" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
           <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
           <div class="absolute bottom-0 left-0 right-0 p-6">
             <h3 class="font-serif text-2xl font-bold text-gold">Relojes</h3>
@@ -237,69 +238,19 @@
         <p class="text-lg text-gray-400">Nuestras piezas más exclusivas y deseadas</p>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Producto 1 -->
-        <article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500"
-          data-id="2"
-          data-name="Anillo Royal"
-          data-price="180000"
-          data-image="img/Anillos/Royal.png">
-          <a href="detail.html?id=2" class="block">
-            <div class="relative h-96 overflow-hidden bg-dark-section cursor-pointer">
-              <img src="img/Anillos/Royal.png" alt="Anillo Royal" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-              <span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">Nuevo</span>
-            </div>
-          </a>
-          <div class="p-6 space-y-4">
-            <h5 class="font-serif text-xl font-bold text-gold">Anillo Royal</h5>
-            <p class="text-2xl font-bold text-white">$180.000</p>
-            <button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
-              Añadir al Carrito
-            </button>
-          </div>
-        </article>
+      <!-- Grid que se llenará dinámicamente -->
+      <div id="featured-products-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Los productos se cargarán aquí desde la API -->
+        <div class="col-span-full text-center py-10">
+          <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-gold mx-auto"></div>
+          <p class="text-gray-400 mt-4">Cargando productos...</p>
+        </div>
+      </div>
 
-        <!-- Producto 2 -->
-        <article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500"
-          data-id="7"
-          data-name="Collar Brillo Infinito"
-          data-price="250000"
-          data-image="img/Collares/BrilloInfinto.png">
-          <a href="detail.html?id=7" class="block">
-            <div class="relative h-96 overflow-hidden bg-dark-section cursor-pointer">
-              <img src="img/Collares/BrilloInfinto.png" alt="Collar Brillo Infinito" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-              <span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">Popular</span>
-            </div>
-          </a>
-          <div class="p-6 space-y-4">
-            <h5 class="font-serif text-xl font-bold text-gold">Collar Brillo Infinito</h5>
-            <p class="text-2xl font-bold text-white">$250.000</p>
-            <button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
-              Añadir al Carrito
-            </button>
-          </div>
-        </article>
-
-        <!-- Producto 3 -->
-        <article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500"
-          data-id="15"
-          data-name="Pulsera Lujo Minimalista"
-          data-price="220000"
-          data-image="img/Pulseras/LujoMinimalista.png">
-          <a href="detail.html?id=15" class="block">
-            <div class="relative h-96 overflow-hidden bg-dark-section cursor-pointer">
-              <img src="img/Pulseras/LujoMinimalista.png" alt="Pulsera Lujo Minimalista" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
-              <span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">Exclusivo</span>
-            </div>
-          </a>
-          <div class="p-6 space-y-4">
-            <h5 class="font-serif text-xl font-bold text-gold">Pulsera Lujo Minimalista</h5>
-            <p class="text-2xl font-bold text-white">$220.000</p>
-            <button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">
-              Añadir al Carrito
-            </button>
-          </div>
-        </article>
+      <div class="text-center mt-12">
+        <a href="shop.html" class="inline-block bg-gold text-black px-10 py-4 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold/50 transition-all duration-300">
+          Ver Toda la Colección
+        </a>
       </div>
     </div>
   </section>
@@ -469,6 +420,7 @@
       setupUserMenu();
       enhanceDropdowns();
       updateCartCount();
+      loadFeaturedProducts();
       attachCartHandlers();
       setupNewsletter();
     });
@@ -543,6 +495,8 @@
             if (r.isConfirmed) {
               localStorage.removeItem("accessToken");
               localStorage.removeItem("refreshToken");
+              // Limpiar carrito del usuario al hacer logout
+              CartUtils.clearCart();
               window.location.href = "index.html";
             }
           });
@@ -550,6 +504,7 @@
       } catch {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        CartUtils.clearCart();
         menu.innerHTML = `
           <div class="relative group">
             <button class="text-sm font-medium uppercase tracking-wide text-white hover:text-gold transition-colors">Mi cuenta</button>
@@ -602,6 +557,65 @@
         timer: 2000,
         showConfirmButton: false
       });
+    }
+
+    // Cargar productos destacados desde la API
+    async function loadFeaturedProducts() {
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/products/?ordering=-created_at');
+        if (!response.ok) throw new Error('Error al cargar productos');
+
+        const products = await response.json();
+        const grid = document.getElementById('featured-products-grid');
+
+        // Mostrar solo los primeros 6 productos
+        const featured = products.slice(0, 6);
+
+        if (featured.length === 0) {
+          grid.innerHTML = '<div class="col-span-full text-center py-10"><p class="text-gray-400">No hay productos disponibles</p></div>';
+          return;
+        }
+
+        grid.innerHTML = featured.map(p => {
+          const imageUrl = p.uploaded_images && p.uploaded_images.length > 0
+            ? `http://127.0.0.1:8000${p.uploaded_images[0].image}`
+            : 'img/placeholder.png';
+
+          const badge = p.stock > 10 ? 'Nuevo' : p.stock > 0 ? 'Últimas unidades' : 'Agotado';
+          const isOutOfStock = p.stock === 0;
+
+          return `
+            <article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500"
+              data-id="${p.id}"
+              data-name="${p.name}"
+              data-price="${p.price}"
+              data-image="${imageUrl}">
+              <a href="detail.html?id=${p.id}" class="block">
+                <div class="relative h-96 overflow-hidden bg-dark-section cursor-pointer">
+                  <img src="${imageUrl}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" onerror="this.src='img/placeholder.png'">
+                  <span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">${badge}</span>
+                </div>
+              </a>
+              <div class="p-6 space-y-4">
+                <p class="text-xs uppercase tracking-wide text-gold font-medium">${p.category_name || 'Sin categoría'}</p>
+                <h5 class="font-serif text-xl font-bold text-white">${p.name}</h5>
+                <p class="text-2xl font-bold text-gold">$${parseFloat(p.price).toLocaleString('es-CO')}</p>
+                ${isOutOfStock
+                  ? '<button class="w-full bg-gray-600 text-gray-400 py-3.5 rounded-full font-bold text-sm uppercase tracking-wide cursor-not-allowed" disabled>Agotado</button>'
+                  : '<button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">Añadir al Carrito</button>'
+                }
+              </div>
+            </article>
+          `;
+        }).join('');
+
+        // Re-attach event listeners for new buttons
+        attachCartHandlers();
+      } catch (error) {
+        console.error('Error cargando productos:', error);
+        const grid = document.getElementById('featured-products-grid');
+        grid.innerHTML = '<div class="col-span-full text-center py-10"><p class="text-gray-400">Error al cargar productos. Por favor, recarga la página.</p></div>';
+      }
     }
 
     function attachCartHandlers() {

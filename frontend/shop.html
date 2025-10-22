@@ -201,38 +201,15 @@
   </footer>
 
   <script>
-    const allProducts = [
-      { id: 1, name: "Anillo Minimal", category: "anillos", price: 150000, image: "img/Anillos/Minimal.png", badge: "Nuevo" },
-      { id: 2, name: "Anillo Royal", category: "anillos", price: 180000, image: "img/Anillos/Royal.png", badge: "Popular" },
-      { id: 3, name: "Anillo Aurora Brillante", category: "anillos", price: 220000, image: "img/Anillos/AuroraBrillante.png", badge: "" },
-      { id: 4, name: "Anillo Eterna Promesa", category: "anillos", price: 280000, image: "img/Anillos/EternaPromesa.png", badge: "" },
-      { id: 5, name: "Anillo Corazón Puro", category: "anillos", price: 190000, image: "img/Anillos/CorazonPuro.png", badge: "" },
-      { id: 6, name: "Collar Minimal Glow", category: "collares", price: 210000, image: "img/Collares/MinimalGlow.png", badge: "" },
-      { id: 7, name: "Collar Brillo Infinito", category: "collares", price: 250000, image: "img/Collares/BrilloInfinto.png", badge: "Popular" },
-      { id: 8, name: "Collar Romance Puro", category: "collares", price: 290000, image: "img/Collares/RomancePuro.png", badge: "" },
-      { id: 9, name: "Collar Esencia Natural", category: "collares", price: 270000, image: "img/Collares/EsenciaNatural.png", badge: "" },
-      { id: 10, name: "Collar Aurora de Amor", category: "collares", price: 310000, image: "img/Collares/AuroraDeAmor.png", badge: "Exclusivo" },
-      { id: 11, name: "Pulsera Romance Clásico", category: "pulseras", price: 170000, image: "img/Pulseras/RomanceClasico.png", badge: "" },
-      { id: 12, name: "Pulsera Vanguardia", category: "pulseras", price: 200000, image: "img/Pulseras/Vanguardia.png", badge: "" },
-      { id: 13, name: "Pulsera Encanto Natural", category: "pulseras", price: 190000, image: "img/Pulseras/EncantoNatural.png", badge: "" },
-      { id: 14, name: "Pulsera Aurora Real", category: "pulseras", price: 240000, image: "img/Pulseras/AuroraReal.png", badge: "" },
-      { id: 15, name: "Pulsera Lujo Minimalista", category: "pulseras", price: 220000, image: "img/Pulseras/LujoMinimalista.png", badge: "Nuevo" },
-      { id: 16, name: "Aretes Brillo Estelar", category: "aretes", price: 160000, image: "img/Aretes/BrilloEstelar.png", badge: "" },
-      { id: 17, name: "Aretes Luz de Luna", category: "aretes", price: 180000, image: "img/Aretes/LuzDeLuna.png", badge: "" },
-      { id: 18, name: "Aretes Flor Dorada", category: "aretes", price: 195000, image: "img/Aretes/FlorDorada.png", badge: "Popular" },
-      { id: 19, name: "Aretes Gotas de Oro", category: "aretes", price: 210000, image: "img/Aretes/GotasDeOro.png", badge: "" },
-      { id: 20, name: "Aretes Aros Eternos", category: "aretes", price: 170000, image: "img/Aretes/ArosEternos.png", badge: "" },
-      { id: 21, name: "Reloj Deportivo Lux", category: "relojes", price: 450000, image: "img/Relojes/DeportivoLux.png", badge: "Premium" },
-      { id: 22, name: "Reloj Clásico Dorado", category: "relojes", price: 520000, image: "img/Relojes/ClasicoDorado.png", badge: "Exclusivo" },
-      { id: 23, name: "Reloj Royal Cronho", category: "relojes", price: 600000, image: "img/Relojes/RoyalCronho.png", badge: "Lujo" }
-    ];
+    const API_BASE = 'http://127.0.0.1:8000/api';
+    let allProducts = [];
+    let filteredProducts = [];
+    let totalProductsCount = 0;
 
-    let filteredProducts = [...allProducts];
-
-    document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", async () => {
       setupUserMenu();
       updateCartCount();
-      renderProducts(allProducts);
+      await loadProducts();
       attachEventListeners();
     });
 
@@ -261,6 +238,70 @@
       } catch { localStorage.removeItem("accessToken"); localStorage.removeItem("refreshToken"); }
     }
 
+    async function loadProducts() {
+      try {
+        const params = new URLSearchParams();
+
+        // Get category filters
+        const categoryFilters = Array.from(document.querySelectorAll('input[id^="cat-"]:checked'));
+        if (categoryFilters.length > 0) {
+          params.append('category_slug', categoryFilters[0].value);
+        }
+
+        // Get price filters
+        const priceFilters = Array.from(document.querySelectorAll('input[id^="price-"]:checked'));
+        if (priceFilters.length > 0) {
+          const [min, max] = priceFilters[0].value.split('-').map(Number);
+          if (min) params.append('price_min', min);
+          if (max) params.append('price_max', max);
+        }
+
+        // Get sorting
+        const sortValue = document.getElementById("sort-select").value;
+        const sortMap = {
+          'name-asc': 'name',
+          'name-desc': '-name',
+          'price-asc': 'price',
+          'price-desc': '-price'
+        };
+        if (sortMap[sortValue]) {
+          params.append('ordering', sortMap[sortValue]);
+        }
+
+        const response = await fetch(`${API_BASE}/products/?${params}`);
+        if (!response.ok) throw new Error('Error al cargar productos');
+
+        const products = await response.json();
+
+        // Transform API data to match frontend format
+        allProducts = products.map(p => ({
+          id: p.id,
+          name: p.name,
+          category: p.category_name ? p.category_name.toLowerCase() : 'sin categoría',
+          price: parseFloat(p.price),
+          image: p.uploaded_images && p.uploaded_images.length > 0
+            ? `http://127.0.0.1:8000${p.uploaded_images[0].image}`
+            : 'img/placeholder.png',
+          badge: p.stock > 5 ? '' : p.stock > 0 ? 'Últimas unidades' : 'Agotado',
+          stock: p.stock || 0
+        }));
+
+        filteredProducts = [...allProducts];
+        totalProductsCount = allProducts.length;
+        renderProducts(filteredProducts);
+      } catch (error) {
+        console.error('Error loading products:', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'No se pudieron cargar los productos. Por favor, recarga la página.',
+          background: '#0a0a0a',
+          color: '#fff',
+          confirmButtonColor: '#d4af37'
+        });
+      }
+    }
+
     function getCart() { try { return JSON.parse(localStorage.getItem("cart")) || []; } catch { return []; } }
     function setCart(cart) { localStorage.setItem("cart", JSON.stringify(cart)); }
     function updateCartCount() { const cart = getCart(); const total = cart.reduce((sum, item) => sum + (item.quantity || 1), 0); document.getElementById("cart-count").textContent = total; }
@@ -283,17 +324,22 @@
       if (products.length === 0) {
         grid.innerHTML = '<div class="col-span-full text-center py-20"><i class="fas fa-search text-6xl text-gold/30 mb-5"></i><p class="text-gray-400 text-xl">No se encontraron productos</p></div>';
         showingCount.textContent = 0;
-        totalCount.textContent = allProducts.length;
+        totalCount.textContent = totalProductsCount;
         return;
       }
 
       grid.innerHTML = products.map(p => {
         const badgeHTML = p.badge ? '<span class="absolute top-4 right-4 bg-gold text-black px-4 py-1.5 rounded-full text-xs font-bold uppercase">' + p.badge + '</span>' : '';
-        return '<article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500" data-id="' + p.id + '" data-name="' + p.name + '" data-price="' + p.price + '" data-image="' + p.image + '"><a href="detail.html?id=' + p.id + '" class="block"><div class="relative h-80 overflow-hidden bg-dark-section cursor-pointer"><img src="' + p.image + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">' + badgeHTML + '</div></a><div class="p-6 space-y-4"><p class="text-xs uppercase tracking-wide text-gold font-medium">' + p.category + '</p><h5 class="font-serif text-xl font-bold text-white">' + p.name + '</h5><p class="text-2xl font-bold text-gold">$' + p.price.toLocaleString('es-CO') + '</p><button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">Añadir al Carrito</button></div></article>';
+        const isOutOfStock = p.stock === 0;
+        const btnHTML = isOutOfStock
+          ? '<button class="w-full bg-gray-600 text-gray-400 py-3.5 rounded-full font-bold text-sm uppercase tracking-wide cursor-not-allowed" disabled>Agotado</button>'
+          : '<button class="btn-cart w-full bg-gold text-black py-3.5 rounded-full font-bold text-sm uppercase tracking-wide hover:bg-gold-light hover:-translate-y-1 hover:shadow-lg hover:shadow-gold/50 transition-all duration-300">Añadir al Carrito</button>';
+
+        return '<article class="product-card group bg-dark-card border border-dark-border rounded-2xl overflow-hidden hover:-translate-y-2 hover:shadow-2xl hover:shadow-gold/30 hover:border-gold/50 transition-all duration-500" data-id="' + p.id + '" data-name="' + p.name + '" data-price="' + p.price + '" data-image="' + p.image + '"><a href="detail.html?id=' + p.id + '" class="block"><div class="relative h-80 overflow-hidden bg-dark-section cursor-pointer"><img src="' + p.image + '" alt="' + p.name + '" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">' + badgeHTML + '</div></a><div class="p-6 space-y-4"><p class="text-xs uppercase tracking-wide text-gold font-medium">' + p.category + '</p><h5 class="font-serif text-xl font-bold text-white">' + p.name + '</h5><p class="text-2xl font-bold text-gold">$' + p.price.toLocaleString('es-CO') + '</p>' + btnHTML + '</div></article>';
       }).join('');
 
       showingCount.textContent = products.length;
-      totalCount.textContent = allProducts.length;
+      totalCount.textContent = totalProductsCount;
 
       document.querySelectorAll(".btn-cart").forEach(btn => {
         btn.addEventListener("click", function () {
@@ -303,41 +349,20 @@
       });
     }
 
-    function applyFilters() {
-      const categoryFilters = Array.from(document.querySelectorAll('input[id^="cat-"]:checked')).map(cb => cb.value);
-      const priceFilters = Array.from(document.querySelectorAll('input[id^="price-"]:checked')).map(cb => cb.value);
-
-      filteredProducts = allProducts.filter(product => {
-        const categoryMatch = categoryFilters.length === 0 || categoryFilters.includes(product.category);
-        let priceMatch = priceFilters.length === 0;
-        if (!priceMatch) {
-          priceMatch = priceFilters.some(range => {
-            const [min, max] = range.split('-').map(Number);
-            return product.price >= min && (max ? product.price <= max : true);
-          });
-        }
-        return categoryMatch && priceMatch;
-      });
-
-      applySorting();
+    async function applyFilters() {
+      await loadProducts();
     }
 
-    function applySorting() {
-      const sortValue = document.getElementById("sort-select").value;
-      if (sortValue === "name-asc") filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
-      else if (sortValue === "name-desc") filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
-      else if (sortValue === "price-asc") filteredProducts.sort((a, b) => a.price - b.price);
-      else if (sortValue === "price-desc") filteredProducts.sort((a, b) => b.price - a.price);
-      renderProducts(filteredProducts);
+    async function applySorting() {
+      await loadProducts();
     }
 
     function attachEventListeners() {
       document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.addEventListener("change", applyFilters));
       document.getElementById("sort-select").addEventListener("change", applySorting);
-      document.getElementById("clear-filters").addEventListener("click", () => {
+      document.getElementById("clear-filters").addEventListener("click", async () => {
         document.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
-        filteredProducts = [...allProducts];
-        applySorting();
+        await loadProducts();
       });
     }
   </script>

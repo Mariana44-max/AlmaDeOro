@@ -9,6 +9,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="js/cart-utils.js"></script>
 
   <script>
     tailwind.config = {
@@ -167,6 +168,12 @@
 
         localStorage.setItem("accessToken", data.access);
         localStorage.setItem("refreshToken", data.refresh);
+
+        // 🔄 Migrar carrito anónimo a usuario autenticado
+        CartUtils.migrateAnonymousCart();
+
+        // 🔄 Cargar carrito desde backend (si existe)
+        await CartUtils.loadCartFromBackend();
 
         Swal.fire({
           icon: "success",
