@@ -345,10 +345,11 @@
       const user = await res.json();
 
       menu.innerHTML = `
-        <button class="dropdown-toggle" type="button"><i class="fas fa-user-circle"></i> ${user.username}</button>
-        <div class="dropdown-menu" style="right:0; left:auto;">
-          <a href="perfil.html">Mi perfil</a>
-          <a href="#" id="logout" class="text-danger">Cerrar sesión</a>
+        <div class="dropdown">
+    <button class="dropdown-toggle" type="button"><i class="fas fa-user-circle"></i> ${user.username}</button>
+    <div class="dropdown-menu" style="right:0; left:auto;">
+      <a href="perfil.html">Mi perfil</a>
+      <a href="#" id="logout" class="text-danger">Cerrar sesión</a>
         </div>`;
       enhanceDropdowns(menu); // <-- activar hover-intent también cuando hay usuario
 
